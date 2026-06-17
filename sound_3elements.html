@@ -7,207 +7,196 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 :root{
-  --bg:#0a0a0f;
-  --card:#13131a;
-  --border:#1e1e2e;
-  --green:#00ff88;
-  --blue:#4fc3f7;
-  --purple:#b388ff;
-  --pink:#ff6b9d;
-  --yellow:#ffd740;
-  --text:#f0f0f0;
-  --muted:#555;
+  --bg:#0a0a0f;--card:#13131a;--border:#1e1e2e;
+  --green:#00ff88;--blue:#4fc3f7;--purple:#b388ff;
+  --pink:#ff6b9d;--yellow:#ffd740;--text:#f0f0f0;--muted:#555;
 }
 body{font-family:'Apple SD Gothic Neo','Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;}
-
-/* 파티클 배경 */
-#bg-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;opacity:0.3;}
-
-/* 전체 레이아웃 */
+#bg-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;opacity:0.25;}
 .app{position:relative;z-index:1;max-width:680px;margin:0 auto;padding:1rem;}
 
-/* 히어로 */
 .hero{text-align:center;padding:2rem 1rem 1.5rem;}
 .hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(0,255,136,0.1);border:1px solid rgba(0,255,136,0.3);border-radius:99px;padding:4px 14px;font-size:11px;color:var(--green);letter-spacing:0.08em;margin-bottom:1rem;}
-.hero h1{font-size:32px;font-weight:700;background:linear-gradient(135deg,var(--green),var(--blue),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.2;margin-bottom:0.5rem;}
+.hero h1{font-size:30px;font-weight:700;background:linear-gradient(135deg,var(--green),var(--blue),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.2;margin-bottom:0.5rem;}
 .hero p{font-size:14px;color:var(--muted);}
 
-/* 카드 */
 .card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:1.25rem;margin-bottom:1rem;}
-.card-title{font-size:11px;letter-spacing:0.1em;color:var(--muted);text-transform:uppercase;margin-bottom:1rem;}
+.sec-header{display:flex;align-items:center;gap:10px;margin-bottom:1rem;}
+.sec-tag{font-size:10px;background:rgba(0,255,136,0.1);color:var(--green);border-radius:99px;padding:3px 10px;letter-spacing:0.05em;}
+.sec-title{font-size:18px;font-weight:600;}
 
-/* 시작 버튼 */
+.std-card{background:#0f0f18;border-left:3px solid var(--green);border-radius:0 12px 12px 0;padding:1rem 1.25rem;margin-bottom:0.75rem;}
+.std-code{font-size:11px;color:var(--green);font-family:monospace;margin-bottom:4px;}
+.std-text{font-size:13px;color:#aaa;line-height:1.7;}
+
+.goal-item{display:flex;gap:12px;align-items:flex-start;margin-bottom:0.75rem;}
+.goal-dot{width:28px;height:28px;flex-shrink:0;border-radius:50%;background:linear-gradient(135deg,var(--green),var(--blue));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#000;}
+.goal-text{font-size:14px;color:#ccc;padding-top:4px;}
+
 .start-section{text-align:center;padding:1.5rem 0;}
 .pulse-btn{position:relative;display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,#00ff88,#00cc6a);color:#000;font-size:17px;font-weight:700;padding:16px 36px;border-radius:99px;border:none;cursor:pointer;transition:transform 0.15s;}
 .pulse-btn:hover{transform:scale(1.04);}
 .pulse-btn::before{content:'';position:absolute;inset:-4px;border-radius:99px;background:linear-gradient(135deg,#00ff88,#00cc6a);opacity:0.3;animation:pulse 2s infinite;}
-@keyframes pulse{0%,100%{transform:scale(1);opacity:0.3;}50%{transform:scale(1.08);opacity:0;}  }
-.stop-btn{display:inline-flex;align-items:center;gap:8px;background:transparent;border:1px solid #ff6b6b;color:#ff6b6b;font-size:15px;padding:10px 24px;border-radius:99px;cursor:pointer;margin-left:10px;}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:0.3;}50%{transform:scale(1.08);opacity:0;}}
 
-/* 메인 dB 디스플레이 */
-.db-display{text-align:center;padding:1.5rem 0 1rem;}
-.db-ring{position:relative;width:160px;height:160px;margin:0 auto 1rem;}
-.db-ring svg{width:160px;height:160px;transform:rotate(-90deg);}
+.db-display{text-align:center;padding:1rem 0;}
+.db-ring{position:relative;width:150px;height:150px;margin:0 auto 1rem;}
+.db-ring svg{width:150px;height:150px;transform:rotate(-90deg);}
 .db-ring-track{fill:none;stroke:#1e1e2e;stroke-width:8;}
 .db-ring-fill{fill:none;stroke-width:8;stroke-linecap:round;transition:stroke-dashoffset 0.15s,stroke 0.3s;}
 .db-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;}
-.db-num{font-size:40px;font-weight:700;color:var(--green);line-height:1;}
-.db-unit-label{font-size:12px;color:var(--muted);}
-.db-status{font-size:13px;color:var(--muted);margin-top:4px;}
+.db-num{font-size:38px;font-weight:700;color:var(--green);line-height:1;}
+.db-unit-small{font-size:12px;color:var(--muted);}
+.db-status{font-size:12px;color:var(--muted);margin-top:4px;}
 
 /* 3요소 지표 */
-.metrics-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:1rem;}
-.metric-box{background:#0f0f18;border:1px solid var(--border);border-radius:14px;padding:1rem;text-align:center;position:relative;overflow:hidden;}
+.metrics-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:1rem;}
+.metric-box{background:#0f0f18;border:1px solid var(--border);border-radius:14px;padding:0.875rem 0.75rem;text-align:center;position:relative;overflow:hidden;}
 .metric-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
 .metric-box.amp::before{background:var(--green);}
 .metric-box.freq::before{background:var(--blue);}
 .metric-box.wave::before{background:var(--purple);}
-.metric-icon{font-size:22px;margin-bottom:6px;}
-.metric-val{font-size:22px;font-weight:700;line-height:1;margin-bottom:2px;}
+.metric-icon{font-size:18px;margin-bottom:4px;}
+.metric-val{font-size:20px;font-weight:700;line-height:1;margin-bottom:2px;}
 .metric-box.amp .metric-val{color:var(--green);}
 .metric-box.freq .metric-val{color:var(--blue);}
 .metric-box.wave .metric-val{color:var(--purple);}
 .metric-lbl{font-size:10px;color:var(--muted);margin-bottom:2px;}
 .metric-sub{font-size:10px;color:#333;}
 
-/* 파형 캔버스 */
-.wave-canvas-wrap{position:relative;margin-bottom:1rem;}
-#waveCanvas{width:100%;height:100px;border-radius:12px;background:#0a0a12;display:block;}
-.wave-label{position:absolute;top:8px;left:12px;font-size:10px;color:var(--muted);}
+/* 통계 박스 */
+.stats-section{margin-bottom:1rem;}
+.stats-title{font-size:11px;color:var(--muted);letter-spacing:0.08em;margin-bottom:8px;}
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.stat-item{background:#0a0a12;border:1px solid var(--border);border-radius:12px;padding:0.75rem;text-align:center;}
+.stat-row{display:flex;justify-content:space-between;margin-bottom:4px;font-size:11px;}
+.stat-row-label{color:var(--muted);}
+.stat-row-val{font-weight:600;}
+.stat-item.s-amp .stat-row-val{color:var(--green);}
+.stat-item.s-freq .stat-row-val{color:var(--blue);}
+.stat-item.s-wave .stat-row-val{color:var(--purple);}
+.stat-name{font-size:10px;color:var(--muted);margin-bottom:6px;text-align:center;}
 
-/* 주파수 스펙트럼 */
-#freqCanvas{width:100%;height:80px;border-radius:12px;background:#0a0a12;display:block;margin-bottom:0.5rem;}
+/* 캔버스 */
+#waveCanvas{width:100%;height:90px;border-radius:12px;background:#0a0a12;display:block;margin-bottom:0.5rem;}
+#freqCanvas{width:100%;height:70px;border-radius:12px;background:#0a0a12;display:block;margin-bottom:4px;}
+#timeCanvas{width:100%;height:90px;border-radius:12px;background:#0a0a12;display:block;}
+.canvas-label{font-size:10px;color:var(--muted);margin-bottom:6px;}
 
-/* 시간 그래프 */
-#timeCanvas{width:100%;height:100px;border-radius:12px;background:#0a0a12;display:block;}
-
-/* 소리 판정 */
+/* 판정 */
 .judge-card{background:linear-gradient(135deg,rgba(0,255,136,0.05),rgba(79,195,247,0.05));border:1px solid rgba(0,255,136,0.2);border-radius:16px;padding:1.25rem;margin-bottom:1rem;text-align:center;}
-.judge-emoji{font-size:40px;margin-bottom:8px;}
-.judge-title{font-size:18px;font-weight:700;color:var(--green);margin-bottom:4px;}
-.judge-desc{font-size:13px;color:var(--muted);}
+.judge-emoji{font-size:36px;margin-bottom:6px;}
+.judge-title{font-size:16px;font-weight:700;color:var(--green);margin-bottom:4px;}
+.judge-desc{font-size:12px;color:var(--muted);}
+
+/* AI 분석 버튼 */
+.analyze-btn{width:100%;padding:14px;background:linear-gradient(135deg,rgba(179,136,255,0.2),rgba(79,195,247,0.2));border:1px solid var(--purple);border-radius:14px;color:var(--purple);font-size:15px;font-weight:600;cursor:pointer;margin-bottom:1rem;transition:all 0.2s;}
+.analyze-btn:hover{background:linear-gradient(135deg,rgba(179,136,255,0.3),rgba(79,195,247,0.3));transform:scale(1.01);}
+
+/* AI 결과 */
+.ai-result{background:#0f0f18;border:1px solid var(--purple);border-radius:16px;padding:1.25rem;margin-bottom:1rem;display:none;}
+.ai-result.show{display:block;}
+.ai-result-title{font-size:13px;color:var(--purple);margin-bottom:1rem;text-align:center;}
+.ai-bars{display:flex;flex-direction:column;gap:10px;}
+.ai-bar-wrap{display:flex;align-items:center;gap:10px;}
+.ai-bar-label{font-size:12px;color:var(--muted);width:80px;flex-shrink:0;text-align:right;}
+.ai-bar-bg{flex:1;background:#1a1a2e;border-radius:99px;height:20px;overflow:hidden;}
+.ai-bar-fill{height:100%;border-radius:99px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;font-size:11px;font-weight:600;color:#000;transition:width 0.8s cubic-bezier(0.34,1.56,0.64,1);}
+.ai-conclusion{margin-top:1rem;padding:1rem;background:#13131a;border-radius:12px;text-align:center;}
+.ai-conclusion-big{font-size:28px;margin-bottom:6px;}
+.ai-conclusion-text{font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px;}
+.ai-conclusion-sub{font-size:12px;color:var(--muted);}
+.ai-disclaimer{font-size:10px;color:#333;margin-top:8px;}
+
+/* 버튼들 */
+.btn-row{display:flex;gap:8px;margin-bottom:1rem;flex-wrap:wrap;}
+.act-btn{display:inline-flex;align-items:center;gap:6px;background:transparent;border:1px solid var(--border);color:var(--muted);font-size:13px;padding:8px 16px;border-radius:99px;cursor:pointer;transition:all 0.15s;}
+.act-btn:hover{border-color:var(--green);color:var(--green);}
+.stop-btn{display:inline-flex;align-items:center;gap:6px;background:transparent;border:1px solid #ff6b6b;color:#ff6b6b;font-size:13px;padding:8px 16px;border-radius:99px;cursor:pointer;}
+
+/* 기록표 */
+.log-table{width:100%;font-size:12px;border-collapse:collapse;}
+.log-table th{font-size:10px;color:var(--muted);font-weight:400;padding:4px 6px;border-bottom:1px solid var(--border);text-align:left;}
+.log-table td{padding:5px 6px;border-bottom:1px solid #111;}
+.tag{font-size:10px;background:rgba(0,255,136,0.1);color:var(--green);border-radius:99px;padding:2px 8px;}
 
 /* 퀴즈 */
-.quiz-section{margin-bottom:1rem;}
-.quiz-q{font-size:15px;font-weight:500;margin-bottom:1rem;color:var(--text);}
+.quiz-q{font-size:14px;font-weight:500;margin-bottom:1rem;color:var(--text);}
 .quiz-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
-.quiz-btn{background:#0f0f18;border:1px solid var(--border);border-radius:12px;padding:12px;font-size:14px;color:var(--text);cursor:pointer;transition:all 0.15s;}
+.quiz-btn{background:#0f0f18;border:1px solid var(--border);border-radius:12px;padding:10px;font-size:13px;color:var(--text);cursor:pointer;transition:all 0.15s;}
 .quiz-btn:hover{border-color:var(--green);color:var(--green);}
 .quiz-btn.correct{background:rgba(0,255,136,0.15);border-color:var(--green);color:var(--green);}
 .quiz-btn.wrong{background:rgba(255,107,107,0.15);border-color:#ff6b6b;color:#ff6b6b;}
-.quiz-result{margin-top:1rem;font-size:14px;text-align:center;min-height:1.5em;}
-
-/* 기록표 */
-.log-table{width:100%;font-size:13px;border-collapse:collapse;}
-.log-table th{font-size:11px;color:var(--muted);font-weight:400;padding:4px 8px;border-bottom:1px solid var(--border);text-align:left;}
-.log-table td{padding:6px 8px;border-bottom:1px solid #111;}
-.tag{font-size:10px;background:rgba(0,255,136,0.1);color:var(--green);border-radius:99px;padding:2px 8px;}
-.save-btn{display:flex;align-items:center;gap:6px;background:transparent;border:1px solid var(--border);color:var(--muted);font-size:13px;padding:8px 16px;border-radius:99px;cursor:pointer;margin-top:0.75rem;}
-.save-btn:hover{border-color:var(--green);color:var(--green);}
-
-/* 성취기준 */
-.std-card{background:#0f0f18;border-left:3px solid var(--green);border-radius:0 12px 12px 0;padding:1rem 1.25rem;margin-bottom:0.75rem;}
-.std-code{font-size:11px;color:var(--green);font-family:monospace;margin-bottom:4px;}
-.std-text{font-size:13px;color:#aaa;line-height:1.7;}
-
-/* 학습목표 */
-.goal-item{display:flex;gap:12px;align-items:flex-start;margin-bottom:0.75rem;}
-.goal-dot{width:28px;height:28px;flex-shrink:0;border-radius:50%;background:linear-gradient(135deg,var(--green),var(--blue));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#000;}
-.goal-text{font-size:14px;color:#ccc;padding-top:4px;}
+.quiz-result{margin-top:0.75rem;font-size:13px;text-align:center;min-height:1.5em;}
 
 /* 정리 */
 .summary-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
 .sum-item{background:#0f0f18;border-radius:14px;padding:1rem;text-align:center;}
-.sum-icon{font-size:24px;margin-bottom:6px;}
+.sum-icon{font-size:22px;margin-bottom:6px;}
 .sum-name{font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px;}
 .sum-rel{font-size:11px;color:var(--green);margin-bottom:4px;}
 .sum-desc{font-size:11px;color:var(--muted);line-height:1.5;}
 
-/* 섹션 헤더 */
-.sec-header{display:flex;align-items:center;gap:10px;margin-bottom:1rem;}
-.sec-tag{font-size:10px;background:rgba(0,255,136,0.1);color:var(--green);border-radius:99px;padding:3px 10px;letter-spacing:0.05em;}
-.sec-title{font-size:18px;font-weight:600;}
-
 @media(max-width:480px){
-  .hero h1{font-size:26px;}
-  .metrics-grid{grid-template-columns:repeat(3,1fr);}
+  .hero h1{font-size:24px;}
   .summary-row{grid-template-columns:1fr;}
-  .db-ring{width:140px;height:140px;}
-  .db-ring svg{width:140px;height:140px;}
-  .db-num{font-size:34px;}
+  .db-num{font-size:32px;}
 }
 </style>
 </head>
 <body>
 <canvas id="bg-canvas"></canvas>
-
 <div class="app">
 
   <!-- 히어로 -->
   <div class="hero">
     <div class="hero-badge">🎓 중2 · 빛과 파동 · 물리학</div>
     <h1>소리를 눈으로 본다면?</h1>
-    <p>스마트폰 마이크로 소리의 3요소를 실시간 분석해봐요</p>
+    <p>스마트폰 마이크로 소리의 3요소를 실시간 분석해요</p>
   </div>
 
   <!-- 성취기준 -->
   <div class="card">
-    <div class="sec-header">
-      <span class="sec-tag">성취기준</span>
-      <span class="sec-title">이 수업의 근거</span>
-    </div>
-    <div class="std-card">
-      <div class="std-code">[9과10-03]</div>
-      <div class="std-text">소리의 세기·높낮이·음색을 진폭·진동수·파형과 관련지어 설명할 수 있다.</div>
-    </div>
-    <div class="std-card">
-      <div class="std-code">[9과10-01]</div>
-      <div class="std-text">파동의 발생과 전달 과정을 이해하고, 진폭·진동수·파장의 관계를 설명할 수 있다.</div>
-    </div>
+    <div class="sec-header"><span class="sec-tag">성취기준</span><span class="sec-title">이 수업의 근거</span></div>
+    <div class="std-card"><div class="std-code">[9과10-03]</div><div class="std-text">소리의 세기·높낮이·음색을 진폭·진동수·파형과 관련지어 설명할 수 있다.</div></div>
+    <div class="std-card"><div class="std-code">[9과10-01]</div><div class="std-text">파동의 발생과 전달 과정을 이해하고, 진폭·진동수·파장의 관계를 설명할 수 있다.</div></div>
   </div>
 
   <!-- 학습목표 -->
   <div class="card">
-    <div class="sec-header">
-      <span class="sec-tag">학습목표</span>
-      <span class="sec-title">오늘 수업을 마치면</span>
-    </div>
+    <div class="sec-header"><span class="sec-tag">학습목표</span><span class="sec-title">오늘 수업을 마치면</span></div>
     <div class="goal-item"><div class="goal-dot">1</div><div class="goal-text">소리의 3요소(세기·높낮이·음색)가 무엇인지 말할 수 있다.</div></div>
     <div class="goal-item"><div class="goal-dot">2</div><div class="goal-text">진폭·진동수·파형을 실시간 그래프로 읽고 해석할 수 있다.</div></div>
     <div class="goal-item"><div class="goal-dot">3</div><div class="goal-text">스마트폰으로 데이터를 수집하고 소리의 특성을 비교할 수 있다.</div></div>
   </div>
 
-  <!-- 마이크 시작 -->
+  <!-- 분석 카드 -->
   <div class="card">
-    <div class="sec-header">
-      <span class="sec-tag">실시간 탐구</span>
-      <span class="sec-title">소리 분석 시작하기</span>
-    </div>
+    <div class="sec-header"><span class="sec-tag">실시간 탐구</span><span class="sec-title">소리 분석 시작하기</span></div>
+
     <div class="start-section" id="start-section">
       <button class="pulse-btn" onclick="startMic()">🎤 마이크 연결하고 시작!</button>
       <p style="font-size:12px;color:var(--muted);margin-top:1rem;">버튼을 누르면 마이크 권한을 요청해요</p>
     </div>
 
-    <!-- 분석 화면 (숨김) -->
     <div id="analysis-section" style="display:none;">
 
       <!-- dB 링 -->
       <div class="db-display">
         <div class="db-ring">
-          <svg viewBox="0 0 160 160">
-            <circle class="db-ring-track" cx="80" cy="80" r="68"/>
-            <circle class="db-ring-fill" id="ring-fill" cx="80" cy="80" r="68"
-              stroke-dasharray="427" stroke-dashoffset="427" stroke="var(--green)"/>
+          <svg viewBox="0 0 150 150">
+            <circle class="db-ring-track" cx="75" cy="75" r="63"/>
+            <circle class="db-ring-fill" id="ring-fill" cx="75" cy="75" r="63" stroke-dasharray="396" stroke-dashoffset="396" stroke="var(--green)"/>
           </svg>
           <div class="db-center">
             <div class="db-num" id="db-num">--</div>
-            <div class="db-unit-label">dB</div>
+            <div class="db-unit-small">dB</div>
           </div>
         </div>
         <div class="db-status" id="db-status">소리를 내보세요!</div>
       </div>
 
-      <!-- 3요소 지표 -->
+      <!-- 3요소 현재값 -->
       <div class="metrics-grid">
         <div class="metric-box amp">
           <div class="metric-icon">📊</div>
@@ -229,171 +218,348 @@ body{font-family:'Apple SD Gothic Neo','Noto Sans KR',sans-serif;background:var(
         </div>
       </div>
 
-      <!-- 파형 -->
-      <div class="card-title">실시간 파형</div>
-      <div class="wave-canvas-wrap">
-        <canvas id="waveCanvas"></canvas>
-        <div class="wave-label">파형 (진폭 · 시간)</div>
+      <!-- 통계 -->
+      <div class="stats-section">
+        <div class="stats-title">📈 누적 통계</div>
+        <div class="stats-grid">
+          <div class="stat-item s-amp">
+            <div class="stat-name">세기 (dB)</div>
+            <div class="stat-row"><span class="stat-row-label">최솟값</span><span class="stat-row-val" id="s-amp-min">--</span></div>
+            <div class="stat-row"><span class="stat-row-label">평균</span><span class="stat-row-val" id="s-amp-avg">--</span></div>
+            <div class="stat-row"><span class="stat-row-label">최댓값</span><span class="stat-row-val" id="s-amp-max">--</span></div>
+          </div>
+          <div class="stat-item s-freq">
+            <div class="stat-name">진동수 (Hz)</div>
+            <div class="stat-row"><span class="stat-row-label">최솟값</span><span class="stat-row-val" id="s-freq-min">--</span></div>
+            <div class="stat-row"><span class="stat-row-label">평균</span><span class="stat-row-val" id="s-freq-avg">--</span></div>
+            <div class="stat-row"><span class="stat-row-label">최댓값</span><span class="stat-row-val" id="s-freq-max">--</span></div>
+          </div>
+          <div class="stat-item s-wave">
+            <div class="stat-name">파장 (cm)</div>
+            <div class="stat-row"><span class="stat-row-label">최솟값</span><span class="stat-row-val" id="s-wave-min">--</span></div>
+            <div class="stat-row"><span class="stat-row-label">평균</span><span class="stat-row-val" id="s-wave-avg">--</span></div>
+            <div class="stat-row"><span class="stat-row-label">최댓값</span><span class="stat-row-val" id="s-wave-max">--</span></div>
+          </div>
+        </div>
       </div>
 
-      <!-- 주파수 스펙트럼 -->
-      <div class="card-title" style="margin-top:1rem;">주파수 스펙트럼</div>
+      <!-- 파형 -->
+      <div class="canvas-label">실시간 파형</div>
+      <canvas id="waveCanvas"></canvas>
+      <div class="canvas-label">주파수 스펙트럼</div>
       <canvas id="freqCanvas"></canvas>
-      <p style="font-size:11px;color:var(--muted);margin-top:4px;">낮은 음 ← &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; → 높은 음</p>
-
-      <!-- 시간 그래프 -->
-      <div class="card-title" style="margin-top:1rem;">소리 크기 변화 (시간)</div>
+      <p style="font-size:10px;color:var(--muted);margin-bottom:0.75rem;">낮은 음 ←&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ 높은 음</p>
+      <div class="canvas-label">소리 크기 변화 (시간)</div>
       <canvas id="timeCanvas"></canvas>
 
       <!-- 소리 판정 -->
-      <div class="judge-card" id="judge-card">
+      <div class="judge-card" style="margin-top:1rem;">
         <div class="judge-emoji" id="judge-emoji">🎤</div>
         <div class="judge-title" id="judge-title">소리를 내보세요</div>
         <div class="judge-desc" id="judge-desc">마이크가 소리를 분석 중이에요</div>
       </div>
 
+      <!-- AI 분석 버튼 -->
+      <button class="analyze-btn" onclick="analyzeVoice()">
+        🔬 내 목소리 분석하기 — 성별 · 연령 추정
+      </button>
+
+      <!-- AI 결과 -->
+      <div class="ai-result" id="ai-result">
+        <div class="ai-result-title">📊 목소리 분석 결과</div>
+        <div class="ai-bars" id="ai-bars"></div>
+        <div class="ai-conclusion" id="ai-conclusion"></div>
+        <div class="ai-disclaimer">※ 진동수 범위 기반 추정값이에요. 실제와 다를 수 있어요 — 왜 다를까요? 토론해봐요!</div>
+      </div>
+
       <!-- 버튼 -->
-      <div style="display:flex;gap:8px;margin-bottom:1rem;flex-wrap:wrap;">
-        <button class="save-btn" onclick="saveLog()">📌 지금 값 저장</button>
-        <button class="save-btn" onclick="resetLog()">🔄 초기화</button>
+      <div class="btn-row">
+        <button class="act-btn" onclick="saveLog()">📌 기록 저장</button>
+        <button class="act-btn" onclick="resetStats()">🔄 통계 초기화</button>
         <button class="stop-btn" onclick="stopMic()">⏹ 중지</button>
       </div>
 
       <!-- 기록표 -->
-      <div class="card-title">모둠 측정 기록표</div>
-      <div id="log-wrap">
-        <p style="font-size:13px;color:var(--muted);">아직 저장된 기록이 없어요 — 소리를 내고 저장해보세요!</p>
-      </div>
-      <p style="font-size:11px;color:#333;margin-top:0.5rem;line-height:1.7;">
-        💡 탐구 방법: ① 조용히 → ② 속삭임 → ③ 보통 목소리 → ④ 큰 소리 → ⑤ 높은 음 → ⑥ 낮은 음 순서로 저장해보세요!
-      </p>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:8px;">모둠 측정 기록표</div>
+      <div id="log-wrap"><p style="font-size:13px;color:var(--muted);">아직 저장된 기록이 없어요</p></div>
+      <p style="font-size:11px;color:#333;margin-top:0.5rem;line-height:1.7;">💡 조용히 → 속삭임 → 보통 목소리 → 큰 소리 → 높은 음 → 낮은 음 순서로 저장해봐요!</p>
     </div>
   </div>
 
-  <!-- 소리 퀴즈 -->
-  <div class="card" id="quiz-card" style="display:none;">
-    <div class="sec-header">
-      <span class="sec-tag">🎮 퀴즈</span>
-      <span class="sec-title">측정값으로 맞춰봐요!</span>
+  <!-- 녹음 분석 카드 -->
+  <div class="card">
+    <div class="sec-header"><span class="sec-tag">🎙️ 녹음 분석</span><span class="sec-title">내 목소리 녹음하고 분석하기</span></div>
+
+    <!-- 녹음 버튼 -->
+    <div style="text-align:center;margin-bottom:1.25rem;">
+      <button id="rec-btn" onclick="toggleRecord()" style="display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,#ff6b9d,#e91e8c);color:#fff;font-size:16px;font-weight:700;padding:14px 32px;border-radius:99px;border:none;cursor:pointer;transition:transform 0.15s;">
+        🔴 녹음 시작
+      </button>
+      <div id="rec-timer" style="font-size:13px;color:var(--muted);margin-top:8px;">최대 10초 녹음 가능</div>
     </div>
+
+    <!-- 녹음 파형 -->
+    <canvas id="recWaveCanvas" style="width:100%;height:70px;border-radius:12px;background:#0a0a12;display:block;margin-bottom:1rem;"></canvas>
+
+    <!-- 재생 컨트롤 -->
+    <div id="playback-section" style="display:none;margin-bottom:1rem;">
+      <div style="background:#0f0f18;border:1px solid var(--border);border-radius:14px;padding:1rem;">
+        <div style="font-size:12px;color:var(--muted);margin-bottom:10px;">녹음 완료 — 재생해보세요</div>
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+          <button onclick="playRecording()" style="display:inline-flex;align-items:center;gap:6px;background:rgba(0,255,136,0.15);border:1px solid var(--green);color:var(--green);font-size:14px;padding:8px 20px;border-radius:99px;cursor:pointer;">▶ 재생</button>
+          <button onclick="stopPlayback()" style="display:inline-flex;align-items:center;gap:6px;background:transparent;border:1px solid var(--border);color:var(--muted);font-size:14px;padding:8px 20px;border-radius:99px;cursor:pointer;">⏹ 정지</button>
+          <button onclick="reRecord()" style="display:inline-flex;align-items:center;gap:6px;background:transparent;border:1px solid var(--border);color:var(--muted);font-size:14px;padding:8px 20px;border-radius:99px;cursor:pointer;">🔄 다시 녹음</button>
+        </div>
+        <!-- 재생 진행바 -->
+        <div style="margin-top:10px;background:#1a1a2e;border-radius:99px;height:6px;overflow:hidden;">
+          <div id="play-progress" style="height:100%;width:0%;background:var(--green);border-radius:99px;transition:width 0.1s;"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-top:4px;">
+          <span id="play-time">0.0s</span>
+          <span id="play-duration">0.0s</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 녹음 분석 버튼 -->
+    <button id="rec-analyze-btn" onclick="analyzeRecording()" style="display:none;width:100%;padding:14px;background:linear-gradient(135deg,rgba(255,107,157,0.2),rgba(179,136,255,0.2));border:1px solid var(--pink);border-radius:14px;color:var(--pink);font-size:15px;font-weight:600;cursor:pointer;margin-bottom:1rem;">
+      🔬 녹음된 목소리 분석하기
+    </button>
+
+    <!-- 녹음 분석 결과 -->
+    <div id="rec-result" style="display:none;">
+      <div style="background:#0f0f18;border:1px solid var(--pink);border-radius:16px;padding:1.25rem;margin-bottom:0.75rem;">
+        <div style="font-size:13px;color:var(--pink);margin-bottom:1rem;text-align:center;">📊 녹음 분석 결과</div>
+
+        <!-- 측정값 요약 -->
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:1rem;">
+          <div style="background:#13131a;border-radius:12px;padding:0.75rem;text-align:center;">
+            <div style="font-size:10px;color:var(--muted);margin-bottom:4px;">평균 세기</div>
+            <div style="font-size:20px;font-weight:700;color:var(--green);" id="rec-avg-db">--</div>
+            <div style="font-size:10px;color:#333;">dB</div>
+          </div>
+          <div style="background:#13131a;border-radius:12px;padding:0.75rem;text-align:center;">
+            <div style="font-size:10px;color:var(--muted);margin-bottom:4px;">평균 진동수</div>
+            <div style="font-size:20px;font-weight:700;color:var(--blue);" id="rec-avg-freq">--</div>
+            <div style="font-size:10px;color:#333;">Hz</div>
+          </div>
+          <div style="background:#13131a;border-radius:12px;padding:0.75rem;text-align:center;">
+            <div style="font-size:10px;color:var(--muted);margin-bottom:4px;">평균 파장</div>
+            <div style="font-size:20px;font-weight:700;color:var(--purple);" id="rec-avg-wave">--</div>
+            <div style="font-size:10px;color:#333;">cm</div>
+          </div>
+        </div>
+
+        <!-- 성별/연령 막대 -->
+        <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:1rem;" id="rec-ai-bars"></div>
+
+        <!-- 결론 -->
+        <div style="background:#13131a;border-radius:12px;padding:1rem;text-align:center;" id="rec-ai-conclusion"></div>
+        <div style="font-size:10px;color:#333;margin-top:8px;text-align:center;">※ 진동수 기반 추정이에요 — 실제와 다를 수 있어요. 왜 그럴까요?</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 음색 비교 카드 -->
+  <div class="card">
+    <div class="sec-header"><span class="sec-tag">음색 탐구</span><span class="sec-title">같은 음, 다른 파형 — 음색이란?</span></div>
+    <p style="font-size:13px;color:#aaa;margin-bottom:1rem;line-height:1.7;">같은 '도(C4, 261Hz)' 음이라도 악기마다 파형 모양이 달라요. 이 파형의 모양 차이가 바로 <span style="color:var(--purple);font-weight:600;">음색</span>이에요.</p>
+
+    <div style="display:flex;gap:8px;margin-bottom:1rem;flex-wrap:wrap;">
+      <button onclick="showTimbre('piano')" class="timbre-btn" id="tb-piano" style="flex:1;min-width:80px;padding:8px;background:rgba(79,195,247,0.15);border:1px solid var(--blue);border-radius:10px;color:var(--blue);font-size:13px;cursor:pointer;">🎹 피아노</button>
+      <button onclick="showTimbre('violin')" class="timbre-btn" id="tb-violin" style="flex:1;min-width:80px;padding:8px;background:#0f0f18;border:1px solid var(--border);border-radius:10px;color:var(--muted);font-size:13px;cursor:pointer;">🎻 바이올린</button>
+      <button onclick="showTimbre('flute')" class="timbre-btn" id="tb-flute" style="flex:1;min-width:80px;padding:8px;background:#0f0f18;border:1px solid var(--border);border-radius:10px;color:var(--muted);font-size:13px;cursor:pointer;">🪈 플루트</button>
+      <button onclick="showTimbre('voice')" class="timbre-btn" id="tb-voice" style="flex:1;min-width:80px;padding:8px;background:#0f0f18;border:1px solid var(--border);border-radius:10px;color:var(--muted);font-size:13px;cursor:pointer;">🎤 사람 목소리</button>
+    </div>
+
+    <canvas id="timbreCanvas" style="width:100%;height:110px;border-radius:12px;background:#0a0a12;display:block;margin-bottom:0.75rem;"></canvas>
+
+    <div id="timbre-info" style="background:#0f0f18;border-radius:12px;padding:0.875rem;font-size:13px;color:#aaa;line-height:1.7;">
+      🎹 <strong style="color:var(--blue);">피아노</strong> — 타현악기. 해머가 줄을 때려 소리를 내요. 처음에 크고 빠르게 줄어드는(감쇠) 파형이 특징이에요. 배음이 풍부하게 섞여 복잡한 파형을 만들어요.
+    </div>
+
+    <div style="margin-top:1rem;padding:0.875rem;background:rgba(179,136,255,0.08);border:1px solid rgba(179,136,255,0.2);border-radius:12px;">
+      <div style="font-size:11px;color:var(--purple);margin-bottom:6px;">💡 핵심 개념</div>
+      <div style="font-size:13px;color:#bbb;line-height:1.7;">진동수(Hz)가 같아도 파형 모양이 다르면 → 음색이 달라진다<br>파형 모양 = 기본음 + 배음(overtone)의 조합</div>
+    </div>
+  </div>
+
+  <!-- 진동수↔파장 관계 카드 -->
+  <div class="card">
+    <div class="sec-header"><span class="sec-tag">파동 관계</span><span class="sec-title">진동수 ↔ 파장 관계 탐구</span></div>
+    <p style="font-size:13px;color:#aaa;margin-bottom:1rem;line-height:1.7;">
+      소리의 속도는 공기 중에서 약 <span style="color:var(--yellow);font-weight:600;">340 m/s</span>로 일정해요.<br>
+      슬라이더로 진동수를 바꿔보면서 파장이 어떻게 달라지는지 확인해봐요!
+    </p>
+
+    <div style="background:#0f0f18;border-radius:14px;padding:1.25rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:1.25rem;flex-wrap:wrap;">
+        <div style="text-align:center;">
+          <div style="font-size:11px;color:var(--muted);margin-bottom:4px;">음속 (v)</div>
+          <div style="font-size:22px;font-weight:700;color:var(--yellow);">340</div>
+          <div style="font-size:11px;color:#333;">m/s</div>
+        </div>
+        <div style="font-size:24px;color:var(--muted);">=</div>
+        <div style="text-align:center;">
+          <div style="font-size:11px;color:var(--muted);margin-bottom:4px;">진동수 (f)</div>
+          <div style="font-size:22px;font-weight:700;color:var(--blue);" id="rel-freq">261</div>
+          <div style="font-size:11px;color:#333;">Hz</div>
+        </div>
+        <div style="font-size:24px;color:var(--muted);">×</div>
+        <div style="text-align:center;">
+          <div style="font-size:11px;color:var(--muted);margin-bottom:4px;">파장 (λ)</div>
+          <div style="font-size:22px;font-weight:700;color:var(--purple);" id="rel-wave">130</div>
+          <div style="font-size:11px;color:#333;">cm</div>
+        </div>
+      </div>
+
+      <div style="margin-bottom:0.75rem;">
+        <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:6px;">
+          <span>낮은 음 (60Hz)</span>
+          <span>진동수: <span id="slider-freq-label" style="color:var(--blue);font-weight:600;">261Hz</span></span>
+          <span>높은 음 (1200Hz)</span>
+        </div>
+        <input type="range" id="freq-slider" min="60" max="1200" value="261" step="1"
+          style="width:100%;accent-color:var(--blue);" oninput="updateRelation(this.value)">
+      </div>
+
+      <canvas id="relCanvas" style="width:100%;height:120px;border-radius:12px;background:#0a0a12;display:block;"></canvas>
+      <p style="font-size:11px;color:var(--muted);margin-top:6px;text-align:center;">파장 시각화 — 진동수가 높을수록 파장이 짧아져요</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
+      <div style="background:#0f0f18;border-radius:12px;padding:0.75rem;text-align:center;cursor:pointer;" onclick="document.getElementById('freq-slider').value=261;updateRelation(261);">
+        <div style="font-size:18px;margin-bottom:4px;">🎹</div>
+        <div style="font-size:12px;color:var(--blue);">도 (C4)</div>
+        <div style="font-size:11px;color:var(--muted);">261 Hz</div>
+      </div>
+      <div style="background:#0f0f18;border-radius:12px;padding:0.75rem;text-align:center;cursor:pointer;" onclick="document.getElementById('freq-slider').value=440;updateRelation(440);">
+        <div style="font-size:18px;margin-bottom:4px;">🎸</div>
+        <div style="font-size:12px;color:var(--green);">라 (A4)</div>
+        <div style="font-size:11px;color:var(--muted);">440 Hz</div>
+      </div>
+      <div style="background:#0f0f18;border-radius:12px;padding:0.75rem;text-align:center;cursor:pointer;" onclick="document.getElementById('freq-slider').value=880;updateRelation(880);">
+        <div style="font-size:18px;margin-bottom:4px;">🎵</div>
+        <div style="font-size:12px;color:var(--purple);">라 (A5)</div>
+        <div style="font-size:11px;color:var(--muted);">880 Hz</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 소리 전달 애니메이션 카드 -->
+  <div class="card">
+    <div class="sec-header"><span class="sec-tag">소리의 전달</span><span class="sec-title">소리는 어떻게 전달될까?</span></div>
+    <p style="font-size:13px;color:#aaa;margin-bottom:1rem;line-height:1.7;">
+      소리는 공기 분자가 <span style="color:var(--green);font-weight:600;">압축(밀)</span>과 <span style="color:var(--blue);font-weight:600;">팽창(소)</span>을 반복하면서 전달돼요. 분자 자체가 이동하는 게 아니라 <strong style="color:var(--yellow);">진동이 전달</strong>되는 거예요!
+    </p>
+
+    <canvas id="moleculeCanvas" style="width:100%;height:140px;border-radius:12px;background:#0a0a12;display:block;margin-bottom:0.75rem;"></canvas>
+
+    <div style="display:flex;gap:8px;margin-bottom:1rem;flex-wrap:wrap;">
+      <button onclick="setMoleculeFreq(1)" style="flex:1;padding:8px;background:rgba(0,255,136,0.1);border:1px solid var(--green);border-radius:10px;color:var(--green);font-size:12px;cursor:pointer;">🐌 저음 (느림)</button>
+      <button onclick="setMoleculeFreq(2)" style="flex:1;padding:8px;background:rgba(79,195,247,0.1);border:1px solid var(--blue);border-radius:10px;color:var(--blue);font-size:12px;cursor:pointer;">🚶 중음 (보통)</button>
+      <button onclick="setMoleculeFreq(4)" style="flex:1;padding:8px;background:rgba(255,107,157,0.1);border:1px solid var(--pink);border-radius:10px;color:var(--pink);font-size:12px;cursor:pointer;">🏃 고음 (빠름)</button>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+      <div style="background:#0f0f18;border-radius:12px;padding:0.875rem;">
+        <div style="font-size:11px;color:var(--green);margin-bottom:4px;">● 밀한 곳 (압축)</div>
+        <div style="font-size:12px;color:#aaa;line-height:1.6;">분자가 모여 있는 부분. 기압이 높아요. → 파동의 마루</div>
+      </div>
+      <div style="background:#0f0f18;border-radius:12px;padding:0.875rem;">
+        <div style="font-size:11px;color:var(--blue);margin-bottom:4px;">○ 소한 곳 (팽창)</div>
+        <div style="font-size:12px;color:#aaa;line-height:1.6;">분자가 퍼진 부분. 기압이 낮아요. → 파동의 골</div>
+      </div>
+    </div>
+
+    <div style="margin-top:1rem;padding:0.875rem;background:rgba(255,215,64,0.08);border:1px solid rgba(255,215,64,0.2);border-radius:12px;">
+      <div style="font-size:11px;color:var(--yellow);margin-bottom:6px;">💡 종파 vs 횡파</div>
+      <div style="font-size:13px;color:#bbb;line-height:1.7;">소리는 <strong style="color:var(--yellow);">종파</strong> — 진동 방향과 파동 진행 방향이 같아요.<br>빛은 <strong style="color:var(--purple);">횡파</strong> — 진동 방향과 진행 방향이 수직이에요.</div>
+    </div>
+  </div>
+
+  <!-- 퀴즈 -->
+  <div class="card" id="quiz-card" style="display:none;">
+    <div class="sec-header"><span class="sec-tag">🎮 퀴즈</span><span class="sec-title">측정값으로 맞춰봐요!</span></div>
     <div id="quiz-body"></div>
   </div>
 
   <!-- 정리 -->
   <div class="card">
-    <div class="sec-header">
-      <span class="sec-tag">정리</span>
-      <span class="sec-title">오늘 배운 것</span>
-    </div>
+    <div class="sec-header"><span class="sec-tag">정리</span><span class="sec-title">오늘 배운 것</span></div>
     <div class="summary-row">
-      <div class="sum-item">
-        <div class="sum-icon">📊</div>
-        <div class="sum-name">소리의 세기</div>
-        <div class="sum-rel">↔ 진폭 · dB</div>
-        <div class="sum-desc">진폭이 클수록<br>소리가 커진다</div>
-      </div>
-      <div class="sum-item">
-        <div class="sum-icon">🎵</div>
-        <div class="sum-name">소리의 높낮이</div>
-        <div class="sum-rel">↔ 진동수 · Hz</div>
-        <div class="sum-desc">진동수가 높을수록<br>높은 음이 난다</div>
-      </div>
-      <div class="sum-item">
-        <div class="sum-icon">〰️</div>
-        <div class="sum-name">음색</div>
-        <div class="sum-rel">↔ 파형 모양</div>
-        <div class="sum-desc">파형이 달라서<br>악기 소리가 구별된다</div>
-      </div>
+      <div class="sum-item"><div class="sum-icon">📊</div><div class="sum-name">소리의 세기</div><div class="sum-rel">↔ 진폭 · dB</div><div class="sum-desc">진폭이 클수록 소리가 커진다</div></div>
+      <div class="sum-item"><div class="sum-icon">🎵</div><div class="sum-name">소리의 높낮이</div><div class="sum-rel">↔ 진동수 · Hz</div><div class="sum-desc">진동수가 높을수록 높은 음이 난다</div></div>
+      <div class="sum-item"><div class="sum-icon">〰️</div><div class="sum-name">음색</div><div class="sum-rel">↔ 파형 모양</div><div class="sum-desc">파형이 달라서 악기 소리가 구별된다</div></div>
     </div>
     <p style="font-size:11px;color:#333;margin-top:1.5rem;text-align:center;">2022 개정 교육과정 · 중학교 2학년 과학 · 빛과 파동</p>
   </div>
-
-</div><!-- /app -->
+</div>
 
 <script>
-// ── 파티클 배경 ──
-const bgCanvas = document.getElementById('bg-canvas');
-const bgCtx = bgCanvas.getContext('2d');
-let particles = [];
-function resizeBg(){bgCanvas.width=window.innerWidth;bgCanvas.height=window.innerHeight;}
-resizeBg();
-window.addEventListener('resize',resizeBg);
-for(let i=0;i<60;i++){
-  particles.push({x:Math.random()*window.innerWidth,y:Math.random()*window.innerHeight,
-    r:Math.random()*1.5+0.3,vx:(Math.random()-0.5)*0.3,vy:(Math.random()-0.5)*0.3,
-    color:`hsl(${Math.random()*60+140},100%,60%)`});
-}
-function animBg(){
-  bgCtx.clearRect(0,0,bgCanvas.width,bgCanvas.height);
-  particles.forEach(p=>{
-    p.x+=p.vx;p.y+=p.vy;
-    if(p.x<0||p.x>bgCanvas.width)p.vx*=-1;
-    if(p.y<0||p.y>bgCanvas.height)p.vy*=-1;
-    bgCtx.beginPath();bgCtx.arc(p.x,p.y,p.r,0,Math.PI*2);
-    bgCtx.fillStyle=p.color;bgCtx.fill();
-  });
-  requestAnimationFrame(animBg);
-}
+// 파티클 배경
+const bgC=document.getElementById('bg-canvas');
+const bgX=bgC.getContext('2d');
+let pts=[];
+function resizeBg(){bgC.width=window.innerWidth;bgC.height=window.innerHeight;}
+resizeBg();window.addEventListener('resize',resizeBg);
+for(let i=0;i<50;i++) pts.push({x:Math.random()*window.innerWidth,y:Math.random()*window.innerHeight,r:Math.random()*1.2+0.3,vx:(Math.random()-0.5)*0.25,vy:(Math.random()-0.5)*0.25,h:Math.random()*60+140});
+function animBg(){bgX.clearRect(0,0,bgC.width,bgC.height);pts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>bgC.width)p.vx*=-1;if(p.y<0||p.y>bgC.height)p.vy*=-1;bgX.beginPath();bgX.arc(p.x,p.y,p.r,0,Math.PI*2);bgX.fillStyle=`hsl(${p.h},100%,60%)`;bgX.fill();});requestAnimationFrame(animBg);}
 animBg();
 
-// ── 오디오 ──
-let audioCtx, analyser, dataArray, timeDataArray, micStream;
-let running = false;
-let logs = [], logCount = 0;
-let timeHistory = [];
-const SAMPLE_RATE = 44100;
+// 오디오
+let audioCtx,analyser,dataArray,timeDataArray,micStream;
+let running=false;
+const SAMPLE_RATE=44100;
 
-const waveCanvas = document.getElementById('waveCanvas');
-const waveCtx = waveCanvas.getContext('2d');
-const freqCanvas = document.getElementById('freqCanvas');
-const freqCtx = freqCanvas.getContext('2d');
-const timeCanvas = document.getElementById('timeCanvas');
-const timeCtx = timeCanvas.getContext('2d');
+// 통계 누적
+let ampVals=[],freqVals=[],waveVals=[];
+let logs=[],logCount=0;
+let timeHistory=[];
 
-function resizeCanvases(){
-  [waveCanvas,freqCanvas,timeCanvas].forEach(c=>{
-    c.width=c.offsetWidth*2;c.height=c.offsetHeight*2;
-  });
-}
+const waveCanvas=document.getElementById('waveCanvas');
+const waveCtx=waveCanvas.getContext('2d');
+const freqCanvas=document.getElementById('freqCanvas');
+const freqCtx=freqCanvas.getContext('2d');
+const timeCanvas=document.getElementById('timeCanvas');
+const timeCtx2=timeCanvas.getContext('2d');
+
+function resizeC(){[waveCanvas,freqCanvas,timeCanvas].forEach(c=>{c.width=c.offsetWidth*2;c.height=c.offsetHeight*2;});}
 
 async function startMic(){
   try{
-    micStream = await navigator.mediaDevices.getUserMedia({audio:true,video:false});
-    audioCtx = new (window.AudioContext||window.webkitAudioContext)();
-    analyser = audioCtx.createAnalyser();
-    analyser.fftSize = 2048;
-    const src = audioCtx.createMediaStreamSource(micStream);
-    src.connect(analyser);
-    dataArray = new Uint8Array(analyser.frequencyBinCount);
-    timeDataArray = new Uint8Array(analyser.fftSize);
-    running = true;
+    micStream=await navigator.mediaDevices.getUserMedia({audio:true,video:false});
+    audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+    analyser=audioCtx.createAnalyser();
+    analyser.fftSize=2048;
+    audioCtx.createMediaStreamSource(micStream).connect(analyser);
+    dataArray=new Uint8Array(analyser.frequencyBinCount);
+    timeDataArray=new Uint8Array(analyser.fftSize);
+    running=true;
     document.getElementById('start-section').style.display='none';
     document.getElementById('analysis-section').style.display='block';
     document.getElementById('quiz-card').style.display='block';
-    setTimeout(()=>{resizeCanvases();},100);
+    setTimeout(()=>{resizeC();},100);
     renderQuiz();
     update();
-  }catch(e){
-    alert('마이크 권한을 허용해주세요!');
-  }
+  }catch(e){alert('마이크 권한을 허용해주세요!');}
 }
 
 function stopMic(){
   running=false;
-  if(micStream) micStream.getTracks().forEach(t=>t.stop());
+  if(micStream)micStream.getTracks().forEach(t=>t.stop());
   document.getElementById('start-section').style.display='block';
   document.getElementById('analysis-section').style.display='none';
 }
 
 function getDominantFreq(){
-  const buf = new Float32Array(analyser.fftSize);
+  const buf=new Float32Array(analyser.fftSize);
   analyser.getFloatTimeDomainData(buf);
-  let maxCorr=-1, bestT=0;
-  const minT=Math.floor(SAMPLE_RATE/800), maxT=Math.floor(SAMPLE_RATE/60);
+  let maxC=-1,bestT=0;
+  const minT=Math.floor(SAMPLE_RATE/1000),maxT=Math.floor(SAMPLE_RATE/60);
   for(let t=minT;t<Math.min(maxT,buf.length/2);t++){
-    let corr=0;
-    for(let i=0;i<buf.length-t;i++) corr+=buf[i]*buf[i+t];
-    if(corr>maxCorr){maxCorr=corr;bestT=t;}
+    let c=0;for(let i=0;i<buf.length-t;i++)c+=buf[i]*buf[i+t];
+    if(c>maxC){maxC=c;bestT=t;}
   }
   return bestT>0?Math.round(SAMPLE_RATE/bestT):0;
 }
@@ -404,149 +570,189 @@ function getDb(){
   return Math.round(avg/255*100+20);
 }
 
+function avg(arr){return arr.length?Math.round(arr.reduce((a,b)=>a+b,0)/arr.length):0;}
+function minV(arr){return arr.length?Math.min(...arr):0;}
+function maxV(arr){return arr.length?Math.max(...arr):0;}
+
+function updateStats(db,freq,wave){
+  if(db>25){ampVals.push(db);if(ampVals.length>300)ampVals.shift();}
+  if(freq>60&&freq<1200){freqVals.push(freq);if(freqVals.length>300)freqVals.shift();}
+  if(wave>0){waveVals.push(wave);if(waveVals.length>300)waveVals.shift();}
+
+  if(ampVals.length){
+    document.getElementById('s-amp-min').textContent=minV(ampVals);
+    document.getElementById('s-amp-avg').textContent=avg(ampVals);
+    document.getElementById('s-amp-max').textContent=maxV(ampVals);
+  }
+  if(freqVals.length){
+    document.getElementById('s-freq-min').textContent=minV(freqVals);
+    document.getElementById('s-freq-avg').textContent=avg(freqVals);
+    document.getElementById('s-freq-max').textContent=maxV(freqVals);
+  }
+  if(waveVals.length){
+    document.getElementById('s-wave-min').textContent=minV(waveVals);
+    document.getElementById('s-wave-avg').textContent=avg(waveVals);
+    document.getElementById('s-wave-max').textContent=maxV(waveVals);
+  }
+}
+
 function getStatus(db,freq){
-  if(db<30) return{emoji:'🤫',title:'거의 무음',desc:'조용한 도서관 수준이에요 (약 30dB 이하)'};
-  if(db<50) return{emoji:'🌿',title:'조용한 소리',desc:'나뭇잎 바스락, 속삭임 수준이에요'};
+  if(db<30)return{emoji:'🤫',title:'거의 무음',desc:'조용한 도서관 수준이에요 (약 30dB 이하)'};
+  if(db<50)return{emoji:'🌿',title:'조용한 소리',desc:'나뭇잎 바스락, 속삭임 수준이에요'};
   if(db<65){
-    if(freq>200&&freq<400) return{emoji:'🎤',title:'보통 남자 목소리',desc:`진동수 ${freq}Hz — 성인 남성 목소리 범위예요`};
-    if(freq>250&&freq<500) return{emoji:'🎤',title:'보통 여자/어린이 목소리',desc:`진동수 ${freq}Hz — 성인 여성·어린이 목소리 범위예요`};
+    if(freq>80&&freq<200)return{emoji:'🎤',title:'낮은 남성 목소리',desc:`진동수 ${freq}Hz — 성인 남성 저음 범위예요`};
+    if(freq>200&&freq<350)return{emoji:'🎤',title:'보통 목소리',desc:`진동수 ${freq}Hz — 보통 대화 수준이에요`};
+    if(freq>350)return{emoji:'🎤',title:'높은 목소리',desc:`진동수 ${freq}Hz — 여성·어린이 목소리 범위예요`};
     return{emoji:'💬',title:'보통 대화 수준',desc:'일반적인 교실 대화 수준이에요'};
   }
-  if(db<80) return{emoji:'📢',title:'시끄러운 소리',desc:'시끄러운 교실, 큰 소리 수준이에요'};
+  if(db<80)return{emoji:'📢',title:'시끄러운 소리',desc:'시끄러운 교실, 큰 소리 수준이에요'};
   return{emoji:'🔊',title:'매우 큰 소리!',desc:'귀에 오래 노출되면 좋지 않아요'};
 }
 
 function getRingColor(db){
-  if(db<50) return '#00ff88';
-  if(db<70) return '#ffd740';
-  return '#ff6b6b';
+  if(db<50)return'#00ff88';
+  if(db<70)return'#ffd740';
+  return'#ff6b6b';
 }
 
 function update(){
-  if(!running) return;
-  const db = getDb();
-  const freq = getDominantFreq();
-  const wavelen = freq>0?Math.round(34000/freq):0;
+  if(!running)return;
+  const db=getDb();
+  const freq=getDominantFreq();
+  const wave=freq>0?Math.round(34000/freq):0;
 
-  // 링
   const pct=Math.min(1,Math.max(0,(db-20)/80));
-  const circ=427;
+  const circ=396;
   document.getElementById('ring-fill').style.strokeDashoffset=circ-(circ*pct);
   document.getElementById('ring-fill').style.stroke=getRingColor(db);
   document.getElementById('db-num').textContent=db;
   document.getElementById('db-num').style.color=getRingColor(db);
-
-  // 지표
   document.getElementById('m-amp').textContent=db;
   document.getElementById('m-freq').textContent=freq>0?freq:'--';
-  document.getElementById('m-wave').textContent=wavelen>0?wavelen:'--';
+  document.getElementById('m-wave').textContent=wave>0?wave:'--';
 
-  // 상태
   const st=getStatus(db,freq);
   document.getElementById('db-status').textContent=st.title;
   document.getElementById('judge-emoji').textContent=st.emoji;
   document.getElementById('judge-title').textContent=st.title;
   document.getElementById('judge-desc').textContent=st.desc;
 
-  // 시간 히스토리
-  timeHistory.push(db);
-  if(timeHistory.length>120) timeHistory.shift();
+  updateStats(db,freq,wave);
 
-  // 파형 그리기
+  timeHistory.push(db);
+  if(timeHistory.length>120)timeHistory.shift();
+
+  // 파형
   analyser.getByteTimeDomainData(timeDataArray);
   waveCtx.clearRect(0,0,waveCanvas.width,waveCanvas.height);
-  waveCtx.lineWidth=2;
-  waveCtx.strokeStyle='#00ff88';
-  waveCtx.shadowColor='#00ff88';
-  waveCtx.shadowBlur=6;
+  waveCtx.lineWidth=2;waveCtx.strokeStyle='#00ff88';
+  waveCtx.shadowColor='#00ff88';waveCtx.shadowBlur=6;
   waveCtx.beginPath();
-  const sliceW=waveCanvas.width/timeDataArray.length;
-  let x=0;
+  const sw=waveCanvas.width/timeDataArray.length;let wx=0;
   for(let i=0;i<timeDataArray.length;i++){
-    const v=timeDataArray[i]/128;
-    const y=v*waveCanvas.height/2;
-    i===0?waveCtx.moveTo(x,y):waveCtx.lineTo(x,y);
-    x+=sliceW;
+    const v=timeDataArray[i]/128,y=v*waveCanvas.height/2;
+    i===0?waveCtx.moveTo(wx,y):waveCtx.lineTo(wx,y);wx+=sw;
   }
-  waveCtx.stroke();
-  waveCtx.shadowBlur=0;
+  waveCtx.stroke();waveCtx.shadowBlur=0;
 
-  // 주파수 스펙트럼
+  // 스펙트럼
   analyser.getByteFrequencyData(dataArray);
   freqCtx.clearRect(0,0,freqCanvas.width,freqCanvas.height);
   const bw=freqCanvas.width/dataArray.length*4;
   for(let i=0;i<dataArray.length/4;i++){
     const h=dataArray[i]/255*freqCanvas.height;
-    const hue=Math.round(140+i/dataArray.length*180);
-    freqCtx.fillStyle=`hsl(${hue},100%,60%)`;
+    freqCtx.fillStyle=`hsl(${140+i/dataArray.length*180},100%,60%)`;
     freqCtx.fillRect(i*bw,freqCanvas.height-h,bw-1,h);
   }
 
   // 시간 그래프
-  timeCtx.clearRect(0,0,timeCanvas.width,timeCanvas.height);
-  timeCtx.strokeStyle='#4fc3f7';
-  timeCtx.lineWidth=2;
-  timeCtx.beginPath();
+  timeCtx2.clearRect(0,0,timeCanvas.width,timeCanvas.height);
+  [30,50,70,90].forEach(v=>{
+    const y=timeCanvas.height-(v-20)/80*timeCanvas.height;
+    timeCtx2.strokeStyle='#1e1e2e';timeCtx2.lineWidth=1;
+    timeCtx2.beginPath();timeCtx2.moveTo(0,y);timeCtx2.lineTo(timeCanvas.width,y);timeCtx2.stroke();
+    timeCtx2.fillStyle='#2a2a3a';timeCtx2.font='20px sans-serif';
+    timeCtx2.fillText(v+'dB',6,y-3);
+  });
+  timeCtx2.strokeStyle='#4fc3f7';timeCtx2.lineWidth=2;timeCtx2.beginPath();
   for(let i=0;i<timeHistory.length;i++){
     const x=i/120*timeCanvas.width;
     const y=timeCanvas.height-(timeHistory[i]-20)/80*timeCanvas.height;
-    i===0?timeCtx.moveTo(x,y):timeCtx.lineTo(x,y);
+    i===0?timeCtx2.moveTo(x,y):timeCtx2.lineTo(x,y);
   }
-  timeCtx.stroke();
-
-  // 그리드라인
-  timeCtx.strokeStyle='#1e1e2e';
-  timeCtx.lineWidth=1;
-  [30,50,70,90].forEach(v=>{
-    const y=timeCanvas.height-(v-20)/80*timeCanvas.height;
-    timeCtx.beginPath();timeCtx.moveTo(0,y);timeCtx.lineTo(timeCanvas.width,y);timeCtx.stroke();
-    timeCtx.fillStyle='#333';timeCtx.font='20px sans-serif';
-    timeCtx.fillText(v+'dB',8,y-4);
-  });
+  timeCtx2.stroke();
 
   requestAnimationFrame(update);
 }
 
-// ── 퀴즈 ──
-const quizzes = [
-  {q:'남자 어른 목소리의 진동수 범위는?',opts:['85~180Hz','300~500Hz','1000Hz 이상','20Hz 이하'],ans:0,hint:'성인 남성은 저음이라 진동수가 낮아요'},
-  {q:'소리가 클수록 파형에서 무엇이 커지나요?',opts:['진동수','파장','진폭','음색'],ans:2,hint:'진폭이 크면 소리가 커져요'},
-  {q:'같은 "도" 음이라도 피아노와 기타 소리가 다른 이유는?',opts:['진동수가 달라서','진폭이 달라서','파형 모양이 달라서','파장이 달라서'],ans:2,hint:'음색은 파형의 모양으로 결정돼요'},
-  {q:'진동수가 높을수록 소리는?',opts:['커진다','작아진다','높아진다','낮아진다'],ans:2,hint:'진동수 = 높낮이'},
-  {q:'사람이 들을 수 있는 소리의 진동수 범위는?',opts:['0~100Hz','20~20,000Hz','100~1,000Hz','1,000~100,000Hz'],ans:1,hint:'가청 주파수 범위예요'},
-];
-let qIdx=0;
-
-function renderQuiz(){
-  const q=quizzes[qIdx%quizzes.length];
-  document.getElementById('quiz-body').innerHTML=`
-    <div class="quiz-q">Q${(qIdx%quizzes.length)+1}. ${q.q}</div>
-    <div class="quiz-opts">
-      ${q.opts.map((o,i)=>`<button class="quiz-btn" onclick="checkQuiz(${i})">${o}</button>`).join('')}
-    </div>
-    <div class="quiz-result" id="quiz-result"></div>
-  `;
-}
-
-function checkQuiz(i){
-  const q=quizzes[qIdx%quizzes.length];
-  const btns=document.querySelectorAll('.quiz-btn');
-  btns.forEach((b,idx)=>{
-    if(idx===q.ans) b.classList.add('correct');
-    else if(idx===i&&i!==q.ans) b.classList.add('wrong');
-    b.disabled=true;
-  });
-  const res=document.getElementById('quiz-result');
-  if(i===q.ans){
-    res.innerHTML=`<span style="color:var(--green)">✅ 정답! ${q.hint}</span>`;
-  } else {
-    res.innerHTML=`<span style="color:#ff6b6b">❌ 틀렸어요! ${q.hint}</span>`;
+// AI 목소리 분석
+function analyzeVoice(){
+  if(!freqVals.length||!ampVals.length){
+    alert('먼저 목소리를 5초 이상 측정해주세요!');return;
   }
-  qIdx++;
-  setTimeout(renderQuiz,2500);
+  const avgFreq=avg(freqVals);
+  const avgDb=avg(ampVals);
+
+  // 성별 추정
+  let maleScore=0,femaleScore=0,childScore=0;
+  if(avgFreq<150){maleScore=85;femaleScore=10;childScore=5;}
+  else if(avgFreq<200){maleScore=60;femaleScore=35;childScore=5;}
+  else if(avgFreq<280){maleScore=20;femaleScore=65;childScore=15;}
+  else if(avgFreq<350){maleScore=5;femaleScore=55;childScore=40;}
+  else{maleScore=3;femaleScore=22;childScore=75;}
+
+  // 연령 추정
+  let age='';
+  if(avgFreq>350)age='10대 초반 또는 어린이';
+  else if(avgFreq>250)age='10대';
+  else if(avgFreq>180)age='20~30대';
+  else if(avgFreq>120)age='30~50대';
+  else age='50대 이상';
+
+  // 결론
+  let gender='',genderEmoji='';
+  if(maleScore>femaleScore&&maleScore>childScore){gender='남성';genderEmoji='👨';}
+  else if(femaleScore>maleScore&&femaleScore>childScore){gender='여성';genderEmoji='👩';}
+  else{gender='어린이/청소년';genderEmoji='🧒';}
+
+  document.getElementById('ai-bars').innerHTML=`
+    <div class="ai-bar-wrap">
+      <span class="ai-bar-label">👨 남성</span>
+      <div class="ai-bar-bg"><div class="ai-bar-fill" style="width:0%;background:linear-gradient(90deg,#4fc3f7,#0288d1);" id="bar-male">${maleScore}%</div></div>
+    </div>
+    <div class="ai-bar-wrap">
+      <span class="ai-bar-label">👩 여성</span>
+      <div class="ai-bar-bg"><div class="ai-bar-fill" style="width:0%;background:linear-gradient(90deg,#ff6b9d,#e91e8c);" id="bar-female">${femaleScore}%</div></div>
+    </div>
+    <div class="ai-bar-wrap">
+      <span class="ai-bar-label">🧒 어린이</span>
+      <div class="ai-bar-bg"><div class="ai-bar-fill" style="width:0%;background:linear-gradient(90deg,#ffd740,#ff9800);" id="bar-child">${childScore}%</div></div>
+    </div>
+  `;
+
+  document.getElementById('ai-conclusion').innerHTML=`
+    <div class="ai-conclusion-big">${genderEmoji}</div>
+    <div class="ai-conclusion-text">추정 결과: ${gender} · ${age}</div>
+    <div class="ai-conclusion-sub">평균 진동수 ${avgFreq}Hz · 평균 세기 ${avgDb}dB 기준</div>
+  `;
+
+  document.getElementById('ai-result').classList.add('show');
+
+  setTimeout(()=>{
+    document.getElementById('bar-male').style.width=maleScore+'%';
+    document.getElementById('bar-female').style.width=femaleScore+'%';
+    document.getElementById('bar-child').style.width=childScore+'%';
+  },100);
 }
 
-// ── 기록 ──
+// 통계 초기화
+function resetStats(){
+  ampVals=[];freqVals=[];waveVals=[];timeHistory=[];
+  ['s-amp-min','s-amp-avg','s-amp-max','s-freq-min','s-freq-avg','s-freq-max','s-wave-min','s-wave-avg','s-wave-max'].forEach(id=>{document.getElementById(id).textContent='--';});
+  document.getElementById('ai-result').classList.remove('show');
+}
+
+// 기록
 const situations=['조용히','속삭임','보통 목소리','큰 소리','높은 음','낮은 음','기타'];
 function saveLog(){
   const db=parseInt(document.getElementById('m-amp').textContent)||0;
@@ -556,9 +762,8 @@ function saveLog(){
   const time=now.getHours()+':'+String(now.getMinutes()).padStart(2,'0')+':'+String(now.getSeconds()).padStart(2,'0');
   const tag=situations[Math.min(logCount,situations.length-1)];
   logs.unshift({time,db,freq,wave,tag});
-  if(logs.length>8) logs.pop();
-  logCount++;
-  renderLog();
+  if(logs.length>8)logs.pop();
+  logCount++;renderLog();
 }
 function renderLog(){
   const el=document.getElementById('log-wrap');
@@ -574,7 +779,444 @@ function renderLog(){
     </tr>`).join('')}
   </table>`;
 }
-function resetLog(){logs=[];logCount=0;renderLog();}
+
+// ── 음색 파형 ──
+const timbreCanvas=document.getElementById('timbreCanvas');
+const timbreCtx=timbreCanvas.getContext('2d');
+let timbreAnim=null;
+
+const timbreData={
+  piano:{
+    color:'#4fc3f7',
+    desc:'🎹 <strong style="color:#4fc3f7;">피아노</strong> — 타현악기. 해머가 줄을 때려 소리를 내요. 처음에 크고 빠르게 줄어드는(감쇠) 파형이 특징이에요. 배음이 풍부하게 섞여 복잡한 파형을 만들어요.',
+    fn:(x,t)=>Math.sin(x+t)*0.7+Math.sin(2*(x+t))*0.2+Math.sin(3*(x+t))*0.08+Math.sin(4*(x+t))*0.04
+  },
+  violin:{
+    color:'#ff6b9d',
+    desc:'🎻 <strong style="color:#ff6b9d;">바이올린</strong> — 찰현악기. 활로 줄을 문질러 소리를 내요. 파형이 날카롭고 배음이 많아 화려하고 날카로운 음색이 특징이에요.',
+    fn:(x,t)=>Math.sin(x+t)+Math.sin(2*(x+t))*0.5+Math.sin(3*(x+t))*0.33+Math.sin(4*(x+t))*0.25+Math.sin(5*(x+t))*0.2
+  },
+  flute:{
+    color:'#00ff88',
+    desc:'🪈 <strong style="color:#00ff88;">플루트</strong> — 목관악기. 입김으로 공기를 진동시켜 소리를 내요. 배음이 적어 순수한 사인파에 가까운 깨끗하고 맑은 음색이 특징이에요.',
+    fn:(x,t)=>Math.sin(x+t)*0.9+Math.sin(2*(x+t))*0.06+Math.sin(3*(x+t))*0.02
+  },
+  voice:{
+    color:'#b388ff',
+    desc:'🎤 <strong style="color:#b388ff;">사람 목소리</strong> — 성대 진동으로 소리를 내요. 다양한 배음과 불규칙한 성분이 섞여 가장 복잡한 파형을 만들어요. 사람마다 파형이 달라 목소리로 구별할 수 있어요.',
+    fn:(x,t)=>Math.sin(x+t)*0.6+Math.sin(1.5*(x+t))*0.3+Math.sin(2*(x+t))*0.4+Math.sin(2.7*(x+t))*0.15+Math.sin(3*(x+t))*0.2+Math.sin(4*(x+t))*0.1+Math.cos(5*(x+t))*0.07
+  }
+};
+
+let currentTimbre='piano',timbreT=0;
+function resizeTimbre(){timbreCanvas.width=timbreCanvas.offsetWidth*2;timbreCanvas.height=timbreCanvas.offsetHeight*2;}
+setTimeout(resizeTimbre,300);
+
+function drawTimbre(){
+  const td=timbreData[currentTimbre];
+  timbreCtx.clearRect(0,0,timbreCanvas.width,timbreCanvas.height);
+  timbreCtx.strokeStyle=td.color;timbreCtx.lineWidth=2.5;
+  timbreCtx.shadowColor=td.color;timbreCtx.shadowBlur=8;
+  timbreCtx.beginPath();
+  for(let i=0;i<timbreCanvas.width;i++){
+    const x=i/timbreCanvas.width*Math.PI*4;
+    const y=td.fn(x,timbreT);
+    const cy=timbreCanvas.height/2-y*timbreCanvas.height*0.35;
+    i===0?timbreCtx.moveTo(i,cy):timbreCtx.lineTo(i,cy);
+  }
+  timbreCtx.stroke();timbreCtx.shadowBlur=0;
+  timbreT+=0.04;
+  timbreAnim=requestAnimationFrame(drawTimbre);
+}
+drawTimbre();
+
+function showTimbre(type){
+  currentTimbre=type;
+  document.querySelectorAll('.timbre-btn').forEach(b=>{
+    b.style.background='#0f0f18';
+    b.style.borderColor='var(--border)';
+    b.style.color='var(--muted)';
+  });
+  const td=timbreData[type];
+  const btn=document.getElementById('tb-'+type);
+  btn.style.background=`rgba(${hexToRgb(td.color)},0.15)`;
+  btn.style.borderColor=td.color;
+  btn.style.color=td.color;
+  document.getElementById('timbre-info').innerHTML=td.desc;
+}
+function hexToRgb(hex){
+  const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);
+  return`${r},${g},${b}`;
+}
+
+// ── 진동수↔파장 관계 ──
+const relCanvas=document.getElementById('relCanvas');
+const relCtx=relCanvas.getContext('2d');
+function resizeRel(){relCanvas.width=relCanvas.offsetWidth*2;relCanvas.height=relCanvas.offsetHeight*2;}
+setTimeout(resizeRel,300);
+
+function updateRelation(freq){
+  freq=parseInt(freq);
+  const wave=Math.round(34000/freq);
+  document.getElementById('rel-freq').textContent=freq;
+  document.getElementById('rel-wave').textContent=wave;
+  document.getElementById('slider-freq-label').textContent=freq+'Hz';
+  document.getElementById('freq-slider').value=freq;
+  drawWaveRelation(freq);
+}
+
+function drawWaveRelation(freq){
+  relCtx.clearRect(0,0,relCanvas.width,relCanvas.height);
+  const cycles=Math.max(1,Math.min(8,freq/150));
+  const amp=relCanvas.height*0.3;
+  const cy=relCanvas.height/2;
+
+  // 배경 그리드
+  relCtx.strokeStyle='#1e1e2e';relCtx.lineWidth=1;
+  relCtx.beginPath();relCtx.moveTo(0,cy);relCtx.lineTo(relCanvas.width,cy);relCtx.stroke();
+
+  // 파형
+  const hue=freq<300?'#4fc3f7':freq<700?'#00ff88':'#ff6b9d';
+  relCtx.strokeStyle=hue;relCtx.lineWidth=3;
+  relCtx.shadowColor=hue;relCtx.shadowBlur=8;
+  relCtx.beginPath();
+  for(let i=0;i<relCanvas.width;i++){
+    const x=i/relCanvas.width*Math.PI*2*cycles;
+    const y=cy-Math.sin(x)*amp;
+    i===0?relCtx.moveTo(i,y):relCtx.lineTo(i,y);
+  }
+  relCtx.stroke();relCtx.shadowBlur=0;
+
+  // 파장 표시 (첫 번째 사이클)
+  if(cycles<=4){
+    const waveW=relCanvas.width/cycles;
+    relCtx.strokeStyle='rgba(255,215,64,0.5)';relCtx.lineWidth=1;relCtx.setLineDash([6,4]);
+    relCtx.beginPath();relCtx.moveTo(0,cy-amp-20);relCtx.lineTo(waveW,cy-amp-20);relCtx.stroke();
+    relCtx.setLineDash([]);
+    relCtx.fillStyle='#ffd740';relCtx.font=`${Math.min(28,relCanvas.height*0.15)}px sans-serif`;
+    relCtx.textAlign='center';
+    relCtx.fillText('λ = '+Math.round(34000/freq)+'cm',waveW/2,cy-amp-30);
+    // 화살표
+    relCtx.strokeStyle='rgba(255,215,64,0.5)';relCtx.lineWidth=1;
+    relCtx.beginPath();relCtx.moveTo(0,cy-amp-20);relCtx.lineTo(0,cy-amp-8);relCtx.stroke();
+    relCtx.beginPath();relCtx.moveTo(waveW,cy-amp-20);relCtx.lineTo(waveW,cy-amp-8);relCtx.stroke();
+  }
+}
+setTimeout(()=>{updateRelation(261);},400);
+
+// ── 공기 분자 애니메이션 ──
+const molCanvas=document.getElementById('moleculeCanvas');
+const molCtx=molCanvas.getContext('2d');
+let molFreqMult=2,molT=0,molAnimRunning=true;
+function resizeMol(){molCanvas.width=molCanvas.offsetWidth*2;molCanvas.height=molCanvas.offsetHeight*2;}
+setTimeout(resizeMol,300);
+
+const COLS=22,ROWS=4;
+function drawMolecules(){
+  molCtx.clearRect(0,0,molCanvas.width,molCanvas.height);
+  const cw=molCanvas.width,ch=molCanvas.height;
+  const cellW=cw/COLS,cellH=ch/ROWS;
+
+  for(let row=0;row<ROWS;row++){
+    for(let col=0;col<COLS;col++){
+      const baseX=(col+0.5)*cellW;
+      const baseY=(row+0.5)*cellH;
+      // 진행 방향(x)으로 밀도 변화
+      const wave=Math.sin(col/COLS*Math.PI*2*molFreqMult-molT);
+      const dx=wave*cellW*0.35;
+      const x=baseX+dx;
+      // 밀도에 따라 색상
+      const density=(wave+1)/2;
+      const r=Math.round(0+density*79),g=Math.round(255-density*60),b=Math.round(136+density*55);
+      const radius=Math.max(3,cellH*0.18);
+      molCtx.beginPath();
+      molCtx.arc(x,baseY,radius,0,Math.PI*2);
+      molCtx.fillStyle=`rgb(${r},${g},${b})`;
+      molCtx.fill();
+    }
+  }
+
+  // 레이블
+  molCtx.fillStyle='rgba(0,255,136,0.7)';molCtx.font='22px sans-serif';molCtx.textAlign='left';
+  molCtx.fillText('밀 →',8,22);
+  molCtx.fillStyle='rgba(79,195,247,0.7)';
+  molCtx.fillText('소 →',8,44);
+
+  molT+=0.04*molFreqMult;
+  if(molAnimRunning)requestAnimationFrame(drawMolecules);
+}
+drawMolecules();
+function setMoleculeFreq(v){molFreqMult=v;}
+
+// ── 녹음 기능 ──
+let mediaRecorder, recordedChunks=[], recBlob=null, recAudioBuf=null;
+let recAudioSrc=null, recPlaying=false;
+let recAnimCtx=null, recAnimRunning=false;
+let recTimer=null, recSeconds=0;
+let isRecording=false;
+
+const recWaveCanvas=document.getElementById('recWaveCanvas');
+const recWaveCtx=recWaveCanvas.getContext('2d');
+
+function resizeRecCanvas(){recWaveCanvas.width=recWaveCanvas.offsetWidth*2;recWaveCanvas.height=recWaveCanvas.offsetHeight*2;}
+setTimeout(resizeRecCanvas,200);
+
+async function toggleRecord(){
+  if(isRecording){stopRecord();return;}
+  try{
+    const stream=await navigator.mediaDevices.getUserMedia({audio:true});
+    recordedChunks=[];
+    mediaRecorder=new MediaRecorder(stream);
+    mediaRecorder.ondataavailable=e=>{if(e.data.size>0)recordedChunks.push(e.data);};
+    mediaRecorder.onstop=onRecordStop;
+
+    // 실시간 파형 시각화
+    const rAC=new(window.AudioContext||window.webkitAudioContext)();
+    const rAnalyser=rAC.createAnalyser();
+    rAnalyser.fftSize=512;
+    rAC.createMediaStreamSource(stream).connect(rAnalyser);
+    const rData=new Uint8Array(rAnalyser.frequencyBinCount);
+    recAnimRunning=true;
+    function drawRecWave(){
+      if(!recAnimRunning)return;
+      rAnalyser.getByteTimeDomainData(rData);
+      recWaveCtx.clearRect(0,0,recWaveCanvas.width,recWaveCanvas.height);
+      recWaveCtx.strokeStyle='#ff6b9d';recWaveCtx.lineWidth=2;
+      recWaveCtx.shadowColor='#ff6b9d';recWaveCtx.shadowBlur=4;
+      recWaveCtx.beginPath();
+      const sw=recWaveCanvas.width/rData.length;let wx=0;
+      for(let i=0;i<rData.length;i++){
+        const v=rData[i]/128,y=v*recWaveCanvas.height/2;
+        i===0?recWaveCtx.moveTo(wx,y):recWaveCtx.lineTo(wx,y);wx+=sw;
+      }
+      recWaveCtx.stroke();recWaveCtx.shadowBlur=0;
+      requestAnimationFrame(drawRecWave);
+    }
+    drawRecWave();
+
+    mediaRecorder.start();
+    isRecording=true;
+    document.getElementById('rec-btn').innerHTML='⏹ 녹음 중지';
+    document.getElementById('rec-btn').style.background='linear-gradient(135deg,#555,#333)';
+    recSeconds=0;
+    document.getElementById('rec-timer').textContent='녹음 중... 0초';
+    recTimer=setInterval(()=>{
+      recSeconds++;
+      document.getElementById('rec-timer').textContent=`녹음 중... ${recSeconds}초`;
+      if(recSeconds>=10)stopRecord();
+    },1000);
+
+    // stream 정리
+    mediaRecorder._stream=stream;
+    mediaRecorder._rAC=rAC;
+  }catch(e){alert('마이크 권한을 허용해주세요!');}
+}
+
+function stopRecord(){
+  if(!mediaRecorder||mediaRecorder.state==='inactive')return;
+  clearInterval(recTimer);
+  recAnimRunning=false;
+  mediaRecorder._stream.getTracks().forEach(t=>t.stop());
+  mediaRecorder._rAC.close();
+  mediaRecorder.stop();
+  isRecording=false;
+  document.getElementById('rec-btn').innerHTML='🔴 녹음 시작';
+  document.getElementById('rec-btn').style.background='linear-gradient(135deg,#ff6b9d,#e91e8c)';
+}
+
+async function onRecordStop(){
+  recBlob=new Blob(recordedChunks,{type:'audio/webm'});
+  const arrBuf=await recBlob.arrayBuffer();
+  const ac=new(window.AudioContext||window.webkitAudioContext)();
+  recAudioBuf=await ac.decodeAudioData(arrBuf);
+  ac.close();
+
+  document.getElementById('playback-section').style.display='block';
+  document.getElementById('rec-analyze-btn').style.display='block';
+  document.getElementById('play-duration').textContent=recAudioBuf.duration.toFixed(1)+'s';
+  document.getElementById('rec-timer').textContent=`녹음 완료 — ${recSeconds}초`;
+
+  // 녹음 파형 그리기
+  drawRecordedWave();
+}
+
+function drawRecordedWave(){
+  const data=recAudioBuf.getChannelData(0);
+  const step=Math.ceil(data.length/recWaveCanvas.width);
+  recWaveCtx.clearRect(0,0,recWaveCanvas.width,recWaveCanvas.height);
+  recWaveCtx.strokeStyle='#b388ff';recWaveCtx.lineWidth=1;
+  recWaveCtx.beginPath();
+  for(let i=0;i<recWaveCanvas.width;i++){
+    let max=0;
+    for(let j=0;j<step;j++){const v=Math.abs(data[i*step+j]||0);if(v>max)max=v;}
+    const h=max*recWaveCanvas.height/2;
+    recWaveCtx.moveTo(i,recWaveCanvas.height/2-h);
+    recWaveCtx.lineTo(i,recWaveCanvas.height/2+h);
+  }
+  recWaveCtx.stroke();
+}
+
+let playbackAC=null, playbackSrc=null;
+function playRecording(){
+  if(!recAudioBuf)return;
+  if(playbackAC)playbackAC.close();
+  playbackAC=new(window.AudioContext||window.webkitAudioContext)();
+  playbackSrc=playbackAC.createBufferSource();
+  playbackSrc.buffer=recAudioBuf;
+  playbackSrc.connect(playbackAC.destination);
+  playbackSrc.start();
+  recPlaying=true;
+  const dur=recAudioBuf.duration;
+  const startTime=playbackAC.currentTime;
+  function updateProgress(){
+    if(!recPlaying)return;
+    const elapsed=playbackAC.currentTime-startTime;
+    const pct=Math.min(100,elapsed/dur*100);
+    document.getElementById('play-progress').style.width=pct+'%';
+    document.getElementById('play-time').textContent=elapsed.toFixed(1)+'s';
+    if(elapsed<dur)requestAnimationFrame(updateProgress);
+    else{recPlaying=false;document.getElementById('play-progress').style.width='0%';}
+  }
+  updateProgress();
+  playbackSrc.onended=()=>{recPlaying=false;};
+}
+
+function stopPlayback(){
+  if(playbackSrc){try{playbackSrc.stop();}catch(e){}playbackSrc=null;}
+  recPlaying=false;
+  document.getElementById('play-progress').style.width='0%';
+  document.getElementById('play-time').textContent='0.0s';
+}
+
+function reRecord(){
+  stopPlayback();
+  recBlob=null;recAudioBuf=null;recordedChunks=[];
+  document.getElementById('playback-section').style.display='none';
+  document.getElementById('rec-analyze-btn').style.display='none';
+  document.getElementById('rec-result').style.display='none';
+  document.getElementById('rec-timer').textContent='최대 10초 녹음 가능';
+  recWaveCtx.clearRect(0,0,recWaveCanvas.width,recWaveCanvas.height);
+}
+
+function analyzeRecording(){
+  if(!recAudioBuf){alert('먼저 녹음해주세요!');return;}
+  const data=recAudioBuf.getChannelData(0);
+  const sr=recAudioBuf.sampleRate;
+
+  // 평균 진폭(세기) 계산
+  let sumAmp=0;
+  for(let i=0;i<data.length;i++)sumAmp+=Math.abs(data[i]);
+  const avgAmp=sumAmp/data.length;
+  const estDb=Math.round(20*Math.log10(avgAmp+0.0001)+100);
+  const db=Math.max(20,Math.min(100,estDb));
+
+  // 자기상관으로 주파수 추정
+  const frameSize=2048;
+  const frames=Math.floor(data.length/frameSize);
+  let freqSum=0,freqCount=0;
+  for(let f=0;f<Math.min(frames,20);f++){
+    const frame=data.slice(f*frameSize,(f+1)*frameSize);
+    const rms=Math.sqrt(frame.reduce((s,v)=>s+v*v,0)/frame.length);
+    if(rms<0.01)continue;
+    let maxC=-1,bestT=0;
+    const minT=Math.floor(sr/1000),maxT=Math.floor(sr/60);
+    for(let t=minT;t<Math.min(maxT,frame.length/2);t++){
+      let c=0;for(let i=0;i<frame.length-t;i++)c+=frame[i]*frame[i+t];
+      if(c>maxC){maxC=c;bestT=t;}
+    }
+    if(bestT>0){freqSum+=sr/bestT;freqCount++;}
+  }
+  const avgFreq=freqCount>0?Math.round(freqSum/freqCount):200;
+  const avgWave=avgFreq>0?Math.round(34000/avgFreq):0;
+
+  // 성별/연령 추정
+  let maleScore=0,femaleScore=0,childScore=0;
+  if(avgFreq<150){maleScore=85;femaleScore=10;childScore=5;}
+  else if(avgFreq<200){maleScore=60;femaleScore=35;childScore=5;}
+  else if(avgFreq<280){maleScore=20;femaleScore=65;childScore=15;}
+  else if(avgFreq<350){maleScore=5;femaleScore=55;childScore=40;}
+  else{maleScore=3;femaleScore=22;childScore=75;}
+
+  let age='';
+  if(avgFreq>350)age='10대 초반 또는 어린이';
+  else if(avgFreq>250)age='10대';
+  else if(avgFreq>180)age='20~30대';
+  else if(avgFreq>120)age='30~50대';
+  else age='50대 이상';
+
+  let gender='',genderEmoji='';
+  if(maleScore>femaleScore&&maleScore>childScore){gender='남성';genderEmoji='👨';}
+  else if(femaleScore>maleScore&&femaleScore>childScore){gender='여성';genderEmoji='👩';}
+  else{gender='어린이/청소년';genderEmoji='🧒';}
+
+  document.getElementById('rec-avg-db').textContent=db;
+  document.getElementById('rec-avg-freq').textContent=avgFreq;
+  document.getElementById('rec-avg-wave').textContent=avgWave;
+
+  document.getElementById('rec-ai-bars').innerHTML=`
+    <div style="display:flex;align-items:center;gap:10px;">
+      <span style="font-size:12px;color:var(--muted);width:80px;text-align:right;flex-shrink:0;">👨 남성</span>
+      <div style="flex:1;background:#1a1a2e;border-radius:99px;height:20px;overflow:hidden;">
+        <div style="height:100%;border-radius:99px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;font-size:11px;font-weight:600;color:#000;background:linear-gradient(90deg,#4fc3f7,#0288d1);width:0%;transition:width 0.8s cubic-bezier(0.34,1.56,0.64,1);" id="rbar-male">${maleScore}%</div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <span style="font-size:12px;color:var(--muted);width:80px;text-align:right;flex-shrink:0;">👩 여성</span>
+      <div style="flex:1;background:#1a1a2e;border-radius:99px;height:20px;overflow:hidden;">
+        <div style="height:100%;border-radius:99px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;font-size:11px;font-weight:600;color:#000;background:linear-gradient(90deg,#ff6b9d,#e91e8c);width:0%;transition:width 0.8s cubic-bezier(0.34,1.56,0.64,1);" id="rbar-female">${femaleScore}%</div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <span style="font-size:12px;color:var(--muted);width:80px;text-align:right;flex-shrink:0;">🧒 어린이</span>
+      <div style="flex:1;background:#1a1a2e;border-radius:99px;height:20px;overflow:hidden;">
+        <div style="height:100%;border-radius:99px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;font-size:11px;font-weight:600;color:#000;background:linear-gradient(90deg,#ffd740,#ff9800);width:0%;transition:width 0.8s cubic-bezier(0.34,1.56,0.64,1);" id="rbar-child">${childScore}%</div>
+      </div>
+    </div>
+  `;
+
+  document.getElementById('rec-ai-conclusion').innerHTML=`
+    <div style="font-size:32px;margin-bottom:6px;">${genderEmoji}</div>
+    <div style="font-size:15px;font-weight:600;color:var(--text);margin-bottom:4px;">추정 결과: ${gender} · ${age}</div>
+    <div style="font-size:12px;color:var(--muted);">평균 진동수 ${avgFreq}Hz · 평균 세기 ${db}dB 기준</div>
+  `;
+
+  document.getElementById('rec-result').style.display='block';
+  setTimeout(()=>{
+    document.getElementById('rbar-male').style.width=maleScore+'%';
+    document.getElementById('rbar-female').style.width=femaleScore+'%';
+    document.getElementById('rbar-child').style.width=childScore+'%';
+  },100);
+}
+
+// 퀴즈
+const quizzes=[
+  {q:'성인 남성 목소리의 평균 진동수 범위는?',opts:['85~180Hz','300~500Hz','1000Hz 이상','20Hz 이하'],ans:0,hint:'남성은 저음이라 진동수가 낮아요'},
+  {q:'소리가 클수록 파형에서 무엇이 커지나요?',opts:['진동수','파장','진폭','음색'],ans:2,hint:'진폭이 크면 소리가 커져요'},
+  {q:'피아노와 기타 소리가 다른 이유는?',opts:['진동수가 달라서','진폭이 달라서','파형 모양이 달라서','파장이 달라서'],ans:2,hint:'음색은 파형의 모양으로 결정돼요'},
+  {q:'진동수가 높을수록 소리는?',opts:['커진다','작아진다','높아진다','낮아진다'],ans:2,hint:'진동수 = 높낮이'},
+  {q:'사람이 들을 수 있는 진동수 범위는?',opts:['0~100Hz','20~20,000Hz','100~1,000Hz','1,000~100,000Hz'],ans:1,hint:'가청 주파수 범위예요'},
+];
+let qIdx=0;
+function renderQuiz(){
+  const q=quizzes[qIdx%quizzes.length];
+  document.getElementById('quiz-body').innerHTML=`
+    <div class="quiz-q">Q${(qIdx%quizzes.length)+1}. ${q.q}</div>
+    <div class="quiz-opts">${q.opts.map((o,i)=>`<button class="quiz-btn" onclick="checkQuiz(${i})">${o}</button>`).join('')}</div>
+    <div class="quiz-result" id="quiz-result"></div>`;
+}
+function checkQuiz(i){
+  const q=quizzes[qIdx%quizzes.length];
+  document.querySelectorAll('.quiz-btn').forEach((b,idx)=>{
+    if(idx===q.ans)b.classList.add('correct');
+    else if(idx===i&&i!==q.ans)b.classList.add('wrong');
+    b.disabled=true;
+  });
+  document.getElementById('quiz-result').innerHTML=i===q.ans?
+    `<span style="color:var(--green)">✅ 정답! ${q.hint}</span>`:
+    `<span style="color:#ff6b6b">❌ 틀렸어요! ${q.hint}</span>`;
+  qIdx++;setTimeout(renderQuiz,2500);
+}
 </script>
 </body>
 </html>
+<!-- 이 파일은 아래에서 새로 만들어집니다 -->
