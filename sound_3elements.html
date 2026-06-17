@@ -3,470 +3,578 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>소리의 3요소 — 중2 빛과 파동</title>
+<title>소리 분석기 — 파동 탐구</title>
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#0a0a0f;
+  --card:#13131a;
+  --border:#1e1e2e;
+  --green:#00ff88;
+  --blue:#4fc3f7;
+  --purple:#b388ff;
+  --pink:#ff6b9d;
+  --yellow:#ffd740;
+  --text:#f0f0f0;
+  --muted:#555;
+}
+body{font-family:'Apple SD Gothic Neo','Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;}
 
-body {
-  font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
-  background: #0f1117;
-  color: #f0f0f0;
-  line-height: 1.7;
-}
+/* 파티클 배경 */
+#bg-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;opacity:0.3;}
 
-/* ── 상단 헤더 ── */
-.hero {
-  background: #0f1117;
-  border-bottom: 1px solid #222;
-  padding: 2.5rem 1.5rem 2rem;
-  text-align: center;
-}
-.hero-tag {
-  display: inline-block;
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  color: #6ee7b7;
-  border: 1px solid #6ee7b7;
-  border-radius: 99px;
-  padding: 3px 12px;
-  margin-bottom: 1rem;
-  text-transform: uppercase;
-}
-.hero h1 {
-  font-size: 28px;
-  font-weight: 500;
-  color: #fff;
-  margin-bottom: 0.5rem;
-}
-.hero p {
-  font-size: 14px;
-  color: #888;
-}
+/* 전체 레이아웃 */
+.app{position:relative;z-index:1;max-width:680px;margin:0 auto;padding:1rem;}
 
-/* ── 섹션 공통 ── */
-.section {
-  max-width: 680px;
-  margin: 0 auto;
-  padding: 2rem 1.5rem;
-  border-bottom: 1px solid #1e1e1e;
-}
-.section-label {
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  color: #6ee7b7;
-  text-transform: uppercase;
-  margin-bottom: 0.75rem;
-}
-.section h2 {
-  font-size: 20px;
-  font-weight: 500;
-  color: #fff;
-  margin-bottom: 1rem;
-}
+/* 히어로 */
+.hero{text-align:center;padding:2rem 1rem 1.5rem;}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(0,255,136,0.1);border:1px solid rgba(0,255,136,0.3);border-radius:99px;padding:4px 14px;font-size:11px;color:var(--green);letter-spacing:0.08em;margin-bottom:1rem;}
+.hero h1{font-size:32px;font-weight:700;background:linear-gradient(135deg,var(--green),var(--blue),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.2;margin-bottom:0.5rem;}
+.hero p{font-size:14px;color:var(--muted);}
 
-/* ── 성취기준 카드 ── */
-.achievement-card {
-  background: #161a22;
-  border: 1px solid #2a2a2a;
-  border-radius: 12px;
-  padding: 1.25rem 1.5rem;
-  margin-bottom: 0.75rem;
-}
-.achievement-code {
-  font-size: 11px;
-  color: #6ee7b7;
-  font-family: monospace;
-  margin-bottom: 6px;
-}
-.achievement-card p {
-  font-size: 14px;
-  color: #ccc;
-  line-height: 1.7;
-}
+/* 카드 */
+.card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:1.25rem;margin-bottom:1rem;}
+.card-title{font-size:11px;letter-spacing:0.1em;color:var(--muted);text-transform:uppercase;margin-bottom:1rem;}
 
-/* ── 학습목표 ── */
-.goal-list {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.goal-list li {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  font-size: 15px;
-  color: #ddd;
-}
-.goal-num {
-  flex-shrink: 0;
-  width: 24px;
-  height: 24px;
-  background: #6ee7b7;
-  color: #0f1117;
-  font-size: 12px;
-  font-weight: 700;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 2px;
-}
+/* 시작 버튼 */
+.start-section{text-align:center;padding:1.5rem 0;}
+.pulse-btn{position:relative;display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,#00ff88,#00cc6a);color:#000;font-size:17px;font-weight:700;padding:16px 36px;border-radius:99px;border:none;cursor:pointer;transition:transform 0.15s;}
+.pulse-btn:hover{transform:scale(1.04);}
+.pulse-btn::before{content:'';position:absolute;inset:-4px;border-radius:99px;background:linear-gradient(135deg,#00ff88,#00cc6a);opacity:0.3;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:0.3;}50%{transform:scale(1.08);opacity:0;}  }
+.stop-btn{display:inline-flex;align-items:center;gap:8px;background:transparent;border:1px solid #ff6b6b;color:#ff6b6b;font-size:15px;padding:10px 24px;border-radius:99px;cursor:pointer;margin-left:10px;}
 
-/* ── 3요소 카드 ── */
-.three-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  margin-bottom: 1.5rem;
-}
-.elem-card {
-  background: #161a22;
-  border: 1px solid #2a2a2a;
-  border-radius: 12px;
-  padding: 1.25rem 1rem;
-  text-align: center;
-  cursor: pointer;
-  transition: border-color 0.2s, background 0.2s;
-}
-.elem-card.active, .elem-card:hover {
-  border-color: #6ee7b7;
-  background: #1a2520;
-}
-.elem-icon { font-size: 28px; margin-bottom: 8px; }
-.elem-name { font-size: 15px; font-weight: 500; color: #fff; margin-bottom: 4px; }
-.elem-sub { font-size: 12px; color: #888; }
+/* 메인 dB 디스플레이 */
+.db-display{text-align:center;padding:1.5rem 0 1rem;}
+.db-ring{position:relative;width:160px;height:160px;margin:0 auto 1rem;}
+.db-ring svg{width:160px;height:160px;transform:rotate(-90deg);}
+.db-ring-track{fill:none;stroke:#1e1e2e;stroke-width:8;}
+.db-ring-fill{fill:none;stroke-width:8;stroke-linecap:round;transition:stroke-dashoffset 0.15s,stroke 0.3s;}
+.db-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;}
+.db-num{font-size:40px;font-weight:700;color:var(--green);line-height:1;}
+.db-unit-label{font-size:12px;color:var(--muted);}
+.db-status{font-size:13px;color:var(--muted);margin-top:4px;}
 
-/* ── 탭 설명 ── */
-.elem-detail {
-  background: #161a22;
-  border: 1px solid #2a2a2a;
-  border-radius: 12px;
-  padding: 1.25rem 1.5rem;
-  margin-bottom: 1rem;
-  display: none;
-}
-.elem-detail.show { display: block; }
-.elem-detail h3 { font-size: 16px; font-weight: 500; color: #6ee7b7; margin-bottom: 0.5rem; }
-.elem-detail p { font-size: 14px; color: #bbb; }
+/* 3요소 지표 */
+.metrics-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:1rem;}
+.metric-box{background:#0f0f18;border:1px solid var(--border);border-radius:14px;padding:1rem;text-align:center;position:relative;overflow:hidden;}
+.metric-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+.metric-box.amp::before{background:var(--green);}
+.metric-box.freq::before{background:var(--blue);}
+.metric-box.wave::before{background:var(--purple);}
+.metric-icon{font-size:22px;margin-bottom:6px;}
+.metric-val{font-size:22px;font-weight:700;line-height:1;margin-bottom:2px;}
+.metric-box.amp .metric-val{color:var(--green);}
+.metric-box.freq .metric-val{color:var(--blue);}
+.metric-box.wave .metric-val{color:var(--purple);}
+.metric-lbl{font-size:10px;color:var(--muted);margin-bottom:2px;}
+.metric-sub{font-size:10px;color:#333;}
 
-/* ── 측정 탐구 ── */
-.meter-wrap {
-  background: #161a22;
-  border: 1px solid #2a2a2a;
-  border-radius: 16px;
-  padding: 2rem 1.5rem;
-  text-align: center;
-  margin-bottom: 1rem;
-}
-.db-big { font-size: 64px; font-weight: 400; color: #6ee7b7; line-height: 1; }
-.db-unit { font-size: 16px; color: #666; margin-top: 4px; margin-bottom: 1.5rem; }
-.bar-bg { background: #222; border-radius: 99px; height: 12px; overflow: hidden; margin-bottom: 0.5rem; }
-.bar-fg { height: 100%; border-radius: 99px; width: 0%; transition: width 0.1s; background: #6ee7b7; }
-.bar-label { font-size: 12px; color: #888; }
+/* 파형 캔버스 */
+.wave-canvas-wrap{position:relative;margin-bottom:1rem;}
+#waveCanvas{width:100%;height:100px;border-radius:12px;background:#0a0a12;display:block;}
+.wave-label{position:absolute;top:8px;left:12px;font-size:10px;color:var(--muted);}
 
-.stats-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin: 1rem 0; }
-.stat-box { background: #0f1117; border-radius: 10px; padding: 0.75rem; text-align: center; }
-.stat-lbl { font-size: 11px; color: #666; margin-bottom: 4px; }
-.stat-num { font-size: 18px; font-weight: 500; color: #f0f0f0; }
+/* 주파수 스펙트럼 */
+#freqCanvas{width:100%;height:80px;border-radius:12px;background:#0a0a12;display:block;margin-bottom:0.5rem;}
 
-.btn-row { display: flex; gap: 10px; margin-bottom: 1rem; }
-.btn { flex: 1; padding: 12px; border-radius: 10px; border: 1px solid #333; background: transparent; color: #f0f0f0; font-size: 14px; cursor: pointer; transition: all 0.15s; }
-.btn:hover { background: #1e1e1e; }
-.btn-green { border-color: #6ee7b7; color: #6ee7b7; }
-.btn:disabled { opacity: 0.4; cursor: not-allowed; }
+/* 시간 그래프 */
+#timeCanvas{width:100%;height:100px;border-radius:12px;background:#0a0a12;display:block;}
 
-/* ── 기록표 ── */
-.log-wrap {
-  background: #161a22;
-  border: 1px solid #2a2a2a;
-  border-radius: 12px;
-  padding: 1rem 1.25rem;
-  margin-bottom: 1rem;
-}
-.log-head { font-size: 12px; color: #666; margin-bottom: 8px; }
-.log-body { font-size: 13px; max-height: 150px; overflow-y: auto; }
-.log-row { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; border-bottom: 1px solid #1e1e1e; }
-.log-row:last-child { border-bottom: none; }
-.log-tag { font-size: 11px; background: #1a2520; color: #6ee7b7; border-radius: 99px; padding: 2px 8px; }
+/* 소리 판정 */
+.judge-card{background:linear-gradient(135deg,rgba(0,255,136,0.05),rgba(79,195,247,0.05));border:1px solid rgba(0,255,136,0.2);border-radius:16px;padding:1.25rem;margin-bottom:1rem;text-align:center;}
+.judge-emoji{font-size:40px;margin-bottom:8px;}
+.judge-title{font-size:18px;font-weight:700;color:var(--green);margin-bottom:4px;}
+.judge-desc{font-size:13px;color:var(--muted);}
 
-/* ── 정리 ── */
-.summary-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 12px;
-}
-.sum-card {
-  background: #161a22;
-  border: 1px solid #2a2a2a;
-  border-radius: 12px;
-  padding: 1rem;
-}
-.sum-card h4 { font-size: 14px; font-weight: 500; color: #6ee7b7; margin-bottom: 6px; }
-.sum-card p { font-size: 13px; color: #aaa; line-height: 1.6; }
+/* 퀴즈 */
+.quiz-section{margin-bottom:1rem;}
+.quiz-q{font-size:15px;font-weight:500;margin-bottom:1rem;color:var(--text);}
+.quiz-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.quiz-btn{background:#0f0f18;border:1px solid var(--border);border-radius:12px;padding:12px;font-size:14px;color:var(--text);cursor:pointer;transition:all 0.15s;}
+.quiz-btn:hover{border-color:var(--green);color:var(--green);}
+.quiz-btn.correct{background:rgba(0,255,136,0.15);border-color:var(--green);color:var(--green);}
+.quiz-btn.wrong{background:rgba(255,107,107,0.15);border-color:#ff6b6b;color:#ff6b6b;}
+.quiz-result{margin-top:1rem;font-size:14px;text-align:center;min-height:1.5em;}
 
-@media (max-width: 480px) {
-  .three-grid { grid-template-columns: 1fr; }
-  .stats-row { grid-template-columns: 1fr 1fr 1fr; }
-  .summary-grid { grid-template-columns: 1fr; }
-  .db-big { font-size: 52px; }
+/* 기록표 */
+.log-table{width:100%;font-size:13px;border-collapse:collapse;}
+.log-table th{font-size:11px;color:var(--muted);font-weight:400;padding:4px 8px;border-bottom:1px solid var(--border);text-align:left;}
+.log-table td{padding:6px 8px;border-bottom:1px solid #111;}
+.tag{font-size:10px;background:rgba(0,255,136,0.1);color:var(--green);border-radius:99px;padding:2px 8px;}
+.save-btn{display:flex;align-items:center;gap:6px;background:transparent;border:1px solid var(--border);color:var(--muted);font-size:13px;padding:8px 16px;border-radius:99px;cursor:pointer;margin-top:0.75rem;}
+.save-btn:hover{border-color:var(--green);color:var(--green);}
+
+/* 성취기준 */
+.std-card{background:#0f0f18;border-left:3px solid var(--green);border-radius:0 12px 12px 0;padding:1rem 1.25rem;margin-bottom:0.75rem;}
+.std-code{font-size:11px;color:var(--green);font-family:monospace;margin-bottom:4px;}
+.std-text{font-size:13px;color:#aaa;line-height:1.7;}
+
+/* 학습목표 */
+.goal-item{display:flex;gap:12px;align-items:flex-start;margin-bottom:0.75rem;}
+.goal-dot{width:28px;height:28px;flex-shrink:0;border-radius:50%;background:linear-gradient(135deg,var(--green),var(--blue));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#000;}
+.goal-text{font-size:14px;color:#ccc;padding-top:4px;}
+
+/* 정리 */
+.summary-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+.sum-item{background:#0f0f18;border-radius:14px;padding:1rem;text-align:center;}
+.sum-icon{font-size:24px;margin-bottom:6px;}
+.sum-name{font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px;}
+.sum-rel{font-size:11px;color:var(--green);margin-bottom:4px;}
+.sum-desc{font-size:11px;color:var(--muted);line-height:1.5;}
+
+/* 섹션 헤더 */
+.sec-header{display:flex;align-items:center;gap:10px;margin-bottom:1rem;}
+.sec-tag{font-size:10px;background:rgba(0,255,136,0.1);color:var(--green);border-radius:99px;padding:3px 10px;letter-spacing:0.05em;}
+.sec-title{font-size:18px;font-weight:600;}
+
+@media(max-width:480px){
+  .hero h1{font-size:26px;}
+  .metrics-grid{grid-template-columns:repeat(3,1fr);}
+  .summary-row{grid-template-columns:1fr;}
+  .db-ring{width:140px;height:140px;}
+  .db-ring svg{width:140px;height:140px;}
+  .db-num{font-size:34px;}
 }
 </style>
 </head>
 <body>
+<canvas id="bg-canvas"></canvas>
 
-<!-- 헤더 -->
-<div class="hero">
-  <div class="hero-tag">중2 · 빛과 파동 · 물리학</div>
-  <h1>소리의 3요소</h1>
-  <p>세기 · 높낮이 · 음색 — 스마트폰으로 직접 측정하기</p>
-</div>
+<div class="app">
 
-<!-- 성취기준 -->
-<div class="section">
-  <div class="section-label">성취기준</div>
-  <h2>이 수업의 교육과정 근거</h2>
-  <div class="achievement-card">
-    <div class="achievement-code">[9과10-03]</div>
-    <p>소리의 세기, 높낮이, 음색을 진폭, 진동수, 파형과 관련지어 설명할 수 있다.</p>
+  <!-- 히어로 -->
+  <div class="hero">
+    <div class="hero-badge">🎓 중2 · 빛과 파동 · 물리학</div>
+    <h1>소리를 눈으로 본다면?</h1>
+    <p>스마트폰 마이크로 소리의 3요소를 실시간 분석해봐요</p>
   </div>
-  <div class="achievement-card">
-    <div class="achievement-code">[9과10-01]</div>
-    <p>파동의 발생과 전달 과정을 이해하고, 파동의 진폭·진동수·파장의 관계를 설명할 수 있다.</p>
-  </div>
-</div>
 
-<!-- 학습목표 -->
-<div class="section">
-  <div class="section-label">학습목표</div>
-  <h2>오늘 수업을 마치면</h2>
-  <ul class="goal-list">
-    <li>
-      <span class="goal-num">1</span>
-      소리의 3요소(세기·높낮이·음색)가 무엇인지 말할 수 있다.
-    </li>
-    <li>
-      <span class="goal-num">2</span>
-      소리의 세기는 진폭, 높낮이는 진동수와 관련됨을 설명할 수 있다.
-    </li>
-    <li>
-      <span class="goal-num">3</span>
-      스마트폰 센서로 소리의 세기(dB)를 측정하고 데이터를 기록할 수 있다.
-    </li>
-  </ul>
-</div>
-
-<!-- 개념 정리 -->
-<div class="section">
-  <div class="section-label">개념 탐색</div>
-  <h2>소리의 3요소 — 눌러서 확인해보세요</h2>
-  <div class="three-grid">
-    <div class="elem-card" onclick="showDetail('loudness')">
-      <div class="elem-icon">🔊</div>
-      <div class="elem-name">세기</div>
-      <div class="elem-sub">진폭 · dB</div>
+  <!-- 성취기준 -->
+  <div class="card">
+    <div class="sec-header">
+      <span class="sec-tag">성취기준</span>
+      <span class="sec-title">이 수업의 근거</span>
     </div>
-    <div class="elem-card" onclick="showDetail('pitch')">
-      <div class="elem-icon">🎵</div>
-      <div class="elem-name">높낮이</div>
-      <div class="elem-sub">진동수 · Hz</div>
+    <div class="std-card">
+      <div class="std-code">[9과10-03]</div>
+      <div class="std-text">소리의 세기·높낮이·음색을 진폭·진동수·파형과 관련지어 설명할 수 있다.</div>
     </div>
-    <div class="elem-card" onclick="showDetail('timbre')">
-      <div class="elem-icon">🎸</div>
-      <div class="elem-name">음색</div>
-      <div class="elem-sub">파형의 모양</div>
+    <div class="std-card">
+      <div class="std-code">[9과10-01]</div>
+      <div class="std-text">파동의 발생과 전달 과정을 이해하고, 진폭·진동수·파장의 관계를 설명할 수 있다.</div>
     </div>
   </div>
 
-  <div id="detail-loudness" class="elem-detail">
-    <h3>소리의 세기 — 진폭과 dB</h3>
-    <p>소리가 얼마나 크고 작은지를 나타내요. 소리를 만드는 물체가 크게 진동할수록(진폭이 클수록) 소리가 커지고, 데시벨(dB) 값이 높아집니다. 30dB 이하는 도서관 수준, 90dB 이상은 귀에 해로울 수 있어요.</p>
-  </div>
-  <div id="detail-pitch" class="elem-detail">
-    <h3>소리의 높낮이 — 진동수와 Hz</h3>
-    <p>소리가 얼마나 높고 낮은지를 나타내요. 1초에 몇 번 진동하는지(진동수, Hz)에 따라 결정돼요. 진동수가 높을수록 높은 음, 낮을수록 낮은 음이에요. 사람이 들을 수 있는 범위는 약 20Hz~20,000Hz입니다.</p>
-  </div>
-  <div id="detail-timbre" class="elem-detail">
-    <h3>음색 — 파형의 모양</h3>
-    <p>같은 높이의 '도' 음이라도 피아노와 기타 소리가 다르게 들리는 이유예요. 소리의 파형 모양(배음 구성)이 다르기 때문이에요. 음색 덕분에 우리는 악기와 사람의 목소리를 구별할 수 있어요.</p>
-  </div>
-</div>
-
-<!-- 탐구 측정 -->
-<div class="section">
-  <div class="section-label">스마트폰 탐구</div>
-  <h2>소리의 세기 직접 측정하기</h2>
-
-  <div class="meter-wrap">
-    <div class="db-big" id="db-val">--</div>
-    <div class="db-unit">dB</div>
-    <div class="bar-bg">
-      <div class="bar-fg" id="bar"></div>
+  <!-- 학습목표 -->
+  <div class="card">
+    <div class="sec-header">
+      <span class="sec-tag">학습목표</span>
+      <span class="sec-title">오늘 수업을 마치면</span>
     </div>
-    <div class="bar-label" id="bar-label">마이크 연결 버튼을 누르세요</div>
+    <div class="goal-item"><div class="goal-dot">1</div><div class="goal-text">소리의 3요소(세기·높낮이·음색)가 무엇인지 말할 수 있다.</div></div>
+    <div class="goal-item"><div class="goal-dot">2</div><div class="goal-text">진폭·진동수·파형을 실시간 그래프로 읽고 해석할 수 있다.</div></div>
+    <div class="goal-item"><div class="goal-dot">3</div><div class="goal-text">스마트폰으로 데이터를 수집하고 소리의 특성을 비교할 수 있다.</div></div>
   </div>
 
-  <div class="stats-row">
-    <div class="stat-box">
-      <div class="stat-lbl">최솟값</div>
-      <div class="stat-num" id="min-val">--</div>
+  <!-- 마이크 시작 -->
+  <div class="card">
+    <div class="sec-header">
+      <span class="sec-tag">실시간 탐구</span>
+      <span class="sec-title">소리 분석 시작하기</span>
     </div>
-    <div class="stat-box">
-      <div class="stat-lbl">현재값</div>
-      <div class="stat-num" id="cur-val">--</div>
+    <div class="start-section" id="start-section">
+      <button class="pulse-btn" onclick="startMic()">🎤 마이크 연결하고 시작!</button>
+      <p style="font-size:12px;color:var(--muted);margin-top:1rem;">버튼을 누르면 마이크 권한을 요청해요</p>
     </div>
-    <div class="stat-box">
-      <div class="stat-lbl">최댓값</div>
-      <div class="stat-num" id="max-val">--</div>
+
+    <!-- 분석 화면 (숨김) -->
+    <div id="analysis-section" style="display:none;">
+
+      <!-- dB 링 -->
+      <div class="db-display">
+        <div class="db-ring">
+          <svg viewBox="0 0 160 160">
+            <circle class="db-ring-track" cx="80" cy="80" r="68"/>
+            <circle class="db-ring-fill" id="ring-fill" cx="80" cy="80" r="68"
+              stroke-dasharray="427" stroke-dashoffset="427" stroke="var(--green)"/>
+          </svg>
+          <div class="db-center">
+            <div class="db-num" id="db-num">--</div>
+            <div class="db-unit-label">dB</div>
+          </div>
+        </div>
+        <div class="db-status" id="db-status">소리를 내보세요!</div>
+      </div>
+
+      <!-- 3요소 지표 -->
+      <div class="metrics-grid">
+        <div class="metric-box amp">
+          <div class="metric-icon">📊</div>
+          <div class="metric-lbl">세기 (진폭)</div>
+          <div class="metric-val" id="m-amp">--</div>
+          <div class="metric-sub">dB</div>
+        </div>
+        <div class="metric-box freq">
+          <div class="metric-icon">🎵</div>
+          <div class="metric-lbl">높낮이 (진동수)</div>
+          <div class="metric-val" id="m-freq">--</div>
+          <div class="metric-sub">Hz</div>
+        </div>
+        <div class="metric-box wave">
+          <div class="metric-icon">〰️</div>
+          <div class="metric-lbl">파장 (추정)</div>
+          <div class="metric-val" id="m-wave">--</div>
+          <div class="metric-sub">cm</div>
+        </div>
+      </div>
+
+      <!-- 파형 -->
+      <div class="card-title">실시간 파형</div>
+      <div class="wave-canvas-wrap">
+        <canvas id="waveCanvas"></canvas>
+        <div class="wave-label">파형 (진폭 · 시간)</div>
+      </div>
+
+      <!-- 주파수 스펙트럼 -->
+      <div class="card-title" style="margin-top:1rem;">주파수 스펙트럼</div>
+      <canvas id="freqCanvas"></canvas>
+      <p style="font-size:11px;color:var(--muted);margin-top:4px;">낮은 음 ← &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; → 높은 음</p>
+
+      <!-- 시간 그래프 -->
+      <div class="card-title" style="margin-top:1rem;">소리 크기 변화 (시간)</div>
+      <canvas id="timeCanvas"></canvas>
+
+      <!-- 소리 판정 -->
+      <div class="judge-card" id="judge-card">
+        <div class="judge-emoji" id="judge-emoji">🎤</div>
+        <div class="judge-title" id="judge-title">소리를 내보세요</div>
+        <div class="judge-desc" id="judge-desc">마이크가 소리를 분석 중이에요</div>
+      </div>
+
+      <!-- 버튼 -->
+      <div style="display:flex;gap:8px;margin-bottom:1rem;flex-wrap:wrap;">
+        <button class="save-btn" onclick="saveLog()">📌 지금 값 저장</button>
+        <button class="save-btn" onclick="resetLog()">🔄 초기화</button>
+        <button class="stop-btn" onclick="stopMic()">⏹ 중지</button>
+      </div>
+
+      <!-- 기록표 -->
+      <div class="card-title">모둠 측정 기록표</div>
+      <div id="log-wrap">
+        <p style="font-size:13px;color:var(--muted);">아직 저장된 기록이 없어요 — 소리를 내고 저장해보세요!</p>
+      </div>
+      <p style="font-size:11px;color:#333;margin-top:0.5rem;line-height:1.7;">
+        💡 탐구 방법: ① 조용히 → ② 속삭임 → ③ 보통 목소리 → ④ 큰 소리 → ⑤ 높은 음 → ⑥ 낮은 음 순서로 저장해보세요!
+      </p>
     </div>
   </div>
 
-  <div class="btn-row">
-    <button class="btn btn-green" id="start-btn" onclick="startMic()">🎤 마이크 연결</button>
-    <button class="btn" id="log-btn" onclick="logData()" disabled>📌 기록 저장</button>
-    <button class="btn" onclick="resetAll()">🔄 초기화</button>
+  <!-- 소리 퀴즈 -->
+  <div class="card" id="quiz-card" style="display:none;">
+    <div class="sec-header">
+      <span class="sec-tag">🎮 퀴즈</span>
+      <span class="sec-title">측정값으로 맞춰봐요!</span>
+    </div>
+    <div id="quiz-body"></div>
   </div>
 
-  <div class="log-wrap">
-    <div class="log-head">모둠 측정 기록표</div>
-    <div class="log-body" id="log-body">
-      <div style="color:#555;font-size:13px;padding:4px 0;">아직 저장된 기록이 없어요</div>
+  <!-- 정리 -->
+  <div class="card">
+    <div class="sec-header">
+      <span class="sec-tag">정리</span>
+      <span class="sec-title">오늘 배운 것</span>
     </div>
+    <div class="summary-row">
+      <div class="sum-item">
+        <div class="sum-icon">📊</div>
+        <div class="sum-name">소리의 세기</div>
+        <div class="sum-rel">↔ 진폭 · dB</div>
+        <div class="sum-desc">진폭이 클수록<br>소리가 커진다</div>
+      </div>
+      <div class="sum-item">
+        <div class="sum-icon">🎵</div>
+        <div class="sum-name">소리의 높낮이</div>
+        <div class="sum-rel">↔ 진동수 · Hz</div>
+        <div class="sum-desc">진동수가 높을수록<br>높은 음이 난다</div>
+      </div>
+      <div class="sum-item">
+        <div class="sum-icon">〰️</div>
+        <div class="sum-name">음색</div>
+        <div class="sum-rel">↔ 파형 모양</div>
+        <div class="sum-desc">파형이 달라서<br>악기 소리가 구별된다</div>
+      </div>
+    </div>
+    <p style="font-size:11px;color:#333;margin-top:1.5rem;text-align:center;">2022 개정 교육과정 · 중학교 2학년 과학 · 빛과 파동</p>
   </div>
 
-  <p style="font-size:12px;color:#555;line-height:1.6;">
-    💡 탐구 방법: ① 조용히 있을 때 측정 → 저장 &nbsp; ② 속삭이며 측정 → 저장 &nbsp; ③ 보통 목소리로 측정 → 저장 &nbsp; ④ 크게 소리질러 측정 → 저장 &nbsp;→ 값이 어떻게 달라지나요?
-  </p>
-</div>
-
-<!-- 정리 -->
-<div class="section" style="border-bottom:none;">
-  <div class="section-label">정리</div>
-  <h2>오늘 배운 것</h2>
-  <div class="summary-grid">
-    <div class="sum-card">
-      <h4>🔊 세기</h4>
-      <p>진폭이 클수록<br>dB 값이 높아짐</p>
-    </div>
-    <div class="sum-card">
-      <h4>🎵 높낮이</h4>
-      <p>진동수(Hz)가 클수록<br>높은 음이 남</p>
-    </div>
-    <div class="sum-card">
-      <h4>🎸 음색</h4>
-      <p>파형의 모양이 달라<br>악기 소리가 구별됨</p>
-    </div>
-  </div>
-  <p style="font-size:13px;color:#555;margin-top:1.5rem;text-align:center;">
-    2022 개정 교육과정 · 중학교 2학년 과학 · 빛과 파동 단원
-  </p>
-</div>
+</div><!-- /app -->
 
 <script>
-let audioCtx, analyser;
-let minDb = 999, maxDb = -999;
+// ── 파티클 배경 ──
+const bgCanvas = document.getElementById('bg-canvas');
+const bgCtx = bgCanvas.getContext('2d');
+let particles = [];
+function resizeBg(){bgCanvas.width=window.innerWidth;bgCanvas.height=window.innerHeight;}
+resizeBg();
+window.addEventListener('resize',resizeBg);
+for(let i=0;i<60;i++){
+  particles.push({x:Math.random()*window.innerWidth,y:Math.random()*window.innerHeight,
+    r:Math.random()*1.5+0.3,vx:(Math.random()-0.5)*0.3,vy:(Math.random()-0.5)*0.3,
+    color:`hsl(${Math.random()*60+140},100%,60%)`});
+}
+function animBg(){
+  bgCtx.clearRect(0,0,bgCanvas.width,bgCanvas.height);
+  particles.forEach(p=>{
+    p.x+=p.vx;p.y+=p.vy;
+    if(p.x<0||p.x>bgCanvas.width)p.vx*=-1;
+    if(p.y<0||p.y>bgCanvas.height)p.vy*=-1;
+    bgCtx.beginPath();bgCtx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    bgCtx.fillStyle=p.color;bgCtx.fill();
+  });
+  requestAnimationFrame(animBg);
+}
+animBg();
+
+// ── 오디오 ──
+let audioCtx, analyser, dataArray, timeDataArray, micStream;
 let running = false;
-let logs = [];
-let logCount = 0;
+let logs = [], logCount = 0;
+let timeHistory = [];
+const SAMPLE_RATE = 44100;
 
-const situations = ['조용히', '속삭임', '보통 목소리', '큰 소리', '측정값'];
+const waveCanvas = document.getElementById('waveCanvas');
+const waveCtx = waveCanvas.getContext('2d');
+const freqCanvas = document.getElementById('freqCanvas');
+const freqCtx = freqCanvas.getContext('2d');
+const timeCanvas = document.getElementById('timeCanvas');
+const timeCtx = timeCanvas.getContext('2d');
 
-function showDetail(id) {
-  document.querySelectorAll('.elem-detail').forEach(el => el.classList.remove('show'));
-  document.querySelectorAll('.elem-card').forEach(el => el.classList.remove('active'));
-  const target = document.getElementById('detail-' + id);
-  if (target) target.classList.add('show');
+function resizeCanvases(){
+  [waveCanvas,freqCanvas,timeCanvas].forEach(c=>{
+    c.width=c.offsetWidth*2;c.height=c.offsetHeight*2;
+  });
 }
 
-function getLevelLabel(db) {
-  if (db < 30) return '매우 조용 — 도서관 수준';
-  if (db < 50) return '조용한 편';
-  if (db < 65) return '보통 대화 수준';
-  if (db < 80) return '시끄러운 교실 수준';
-  return '매우 큰 소리!';
-}
-
-function getBarColor(db) {
-  if (db < 50) return '#6ee7b7';
-  if (db < 70) return '#fbbf24';
-  return '#f87171';
-}
-
-async function startMic() {
-  if (running) return;
-  try {
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+async function startMic(){
+  try{
+    micStream = await navigator.mediaDevices.getUserMedia({audio:true,video:false});
+    audioCtx = new (window.AudioContext||window.webkitAudioContext)();
     analyser = audioCtx.createAnalyser();
-    analyser.fftSize = 256;
-    audioCtx.createMediaStreamSource(stream).connect(analyser);
+    analyser.fftSize = 2048;
+    const src = audioCtx.createMediaStreamSource(micStream);
+    src.connect(analyser);
+    dataArray = new Uint8Array(analyser.frequencyBinCount);
+    timeDataArray = new Uint8Array(analyser.fftSize);
     running = true;
-    document.getElementById('start-btn').textContent = '측정 중...';
-    document.getElementById('start-btn').disabled = true;
-    document.getElementById('log-btn').disabled = false;
+    document.getElementById('start-section').style.display='none';
+    document.getElementById('analysis-section').style.display='block';
+    document.getElementById('quiz-card').style.display='block';
+    setTimeout(()=>{resizeCanvases();},100);
+    renderQuiz();
     update();
-  } catch(e) {
-    document.getElementById('bar-label').textContent = '마이크 권한을 허용해주세요';
+  }catch(e){
+    alert('마이크 권한을 허용해주세요!');
   }
 }
 
-function update() {
-  if (!running) return;
-  const data = new Uint8Array(analyser.frequencyBinCount);
-  analyser.getByteFrequencyData(data);
-  const avg = data.reduce((a, b) => a + b, 0) / data.length;
-  const db = Math.round(avg / 255 * 100 + 20);
+function stopMic(){
+  running=false;
+  if(micStream) micStream.getTracks().forEach(t=>t.stop());
+  document.getElementById('start-section').style.display='block';
+  document.getElementById('analysis-section').style.display='none';
+}
 
-  if (db < minDb) minDb = db;
-  if (db > maxDb) maxDb = db;
+function getDominantFreq(){
+  const buf = new Float32Array(analyser.fftSize);
+  analyser.getFloatTimeDomainData(buf);
+  let maxCorr=-1, bestT=0;
+  const minT=Math.floor(SAMPLE_RATE/800), maxT=Math.floor(SAMPLE_RATE/60);
+  for(let t=minT;t<Math.min(maxT,buf.length/2);t++){
+    let corr=0;
+    for(let i=0;i<buf.length-t;i++) corr+=buf[i]*buf[i+t];
+    if(corr>maxCorr){maxCorr=corr;bestT=t;}
+  }
+  return bestT>0?Math.round(SAMPLE_RATE/bestT):0;
+}
 
-  document.getElementById('db-val').textContent = db;
-  document.getElementById('cur-val').textContent = db + ' dB';
-  document.getElementById('min-val').textContent = minDb === 999 ? '--' : minDb + ' dB';
-  document.getElementById('max-val').textContent = maxDb === -999 ? '--' : maxDb + ' dB';
+function getDb(){
+  analyser.getByteFrequencyData(dataArray);
+  const avg=dataArray.reduce((a,b)=>a+b,0)/dataArray.length;
+  return Math.round(avg/255*100+20);
+}
 
-  const pct = Math.min(100, Math.max(0, (db - 20) / 80 * 100));
-  const bar = document.getElementById('bar');
-  bar.style.width = pct + '%';
-  bar.style.background = getBarColor(db);
-  document.getElementById('bar-label').textContent = getLevelLabel(db);
+function getStatus(db,freq){
+  if(db<30) return{emoji:'🤫',title:'거의 무음',desc:'조용한 도서관 수준이에요 (약 30dB 이하)'};
+  if(db<50) return{emoji:'🌿',title:'조용한 소리',desc:'나뭇잎 바스락, 속삭임 수준이에요'};
+  if(db<65){
+    if(freq>200&&freq<400) return{emoji:'🎤',title:'보통 남자 목소리',desc:`진동수 ${freq}Hz — 성인 남성 목소리 범위예요`};
+    if(freq>250&&freq<500) return{emoji:'🎤',title:'보통 여자/어린이 목소리',desc:`진동수 ${freq}Hz — 성인 여성·어린이 목소리 범위예요`};
+    return{emoji:'💬',title:'보통 대화 수준',desc:'일반적인 교실 대화 수준이에요'};
+  }
+  if(db<80) return{emoji:'📢',title:'시끄러운 소리',desc:'시끄러운 교실, 큰 소리 수준이에요'};
+  return{emoji:'🔊',title:'매우 큰 소리!',desc:'귀에 오래 노출되면 좋지 않아요'};
+}
+
+function getRingColor(db){
+  if(db<50) return '#00ff88';
+  if(db<70) return '#ffd740';
+  return '#ff6b6b';
+}
+
+function update(){
+  if(!running) return;
+  const db = getDb();
+  const freq = getDominantFreq();
+  const wavelen = freq>0?Math.round(34000/freq):0;
+
+  // 링
+  const pct=Math.min(1,Math.max(0,(db-20)/80));
+  const circ=427;
+  document.getElementById('ring-fill').style.strokeDashoffset=circ-(circ*pct);
+  document.getElementById('ring-fill').style.stroke=getRingColor(db);
+  document.getElementById('db-num').textContent=db;
+  document.getElementById('db-num').style.color=getRingColor(db);
+
+  // 지표
+  document.getElementById('m-amp').textContent=db;
+  document.getElementById('m-freq').textContent=freq>0?freq:'--';
+  document.getElementById('m-wave').textContent=wavelen>0?wavelen:'--';
+
+  // 상태
+  const st=getStatus(db,freq);
+  document.getElementById('db-status').textContent=st.title;
+  document.getElementById('judge-emoji').textContent=st.emoji;
+  document.getElementById('judge-title').textContent=st.title;
+  document.getElementById('judge-desc').textContent=st.desc;
+
+  // 시간 히스토리
+  timeHistory.push(db);
+  if(timeHistory.length>120) timeHistory.shift();
+
+  // 파형 그리기
+  analyser.getByteTimeDomainData(timeDataArray);
+  waveCtx.clearRect(0,0,waveCanvas.width,waveCanvas.height);
+  waveCtx.lineWidth=2;
+  waveCtx.strokeStyle='#00ff88';
+  waveCtx.shadowColor='#00ff88';
+  waveCtx.shadowBlur=6;
+  waveCtx.beginPath();
+  const sliceW=waveCanvas.width/timeDataArray.length;
+  let x=0;
+  for(let i=0;i<timeDataArray.length;i++){
+    const v=timeDataArray[i]/128;
+    const y=v*waveCanvas.height/2;
+    i===0?waveCtx.moveTo(x,y):waveCtx.lineTo(x,y);
+    x+=sliceW;
+  }
+  waveCtx.stroke();
+  waveCtx.shadowBlur=0;
+
+  // 주파수 스펙트럼
+  analyser.getByteFrequencyData(dataArray);
+  freqCtx.clearRect(0,0,freqCanvas.width,freqCanvas.height);
+  const bw=freqCanvas.width/dataArray.length*4;
+  for(let i=0;i<dataArray.length/4;i++){
+    const h=dataArray[i]/255*freqCanvas.height;
+    const hue=Math.round(140+i/dataArray.length*180);
+    freqCtx.fillStyle=`hsl(${hue},100%,60%)`;
+    freqCtx.fillRect(i*bw,freqCanvas.height-h,bw-1,h);
+  }
+
+  // 시간 그래프
+  timeCtx.clearRect(0,0,timeCanvas.width,timeCanvas.height);
+  timeCtx.strokeStyle='#4fc3f7';
+  timeCtx.lineWidth=2;
+  timeCtx.beginPath();
+  for(let i=0;i<timeHistory.length;i++){
+    const x=i/120*timeCanvas.width;
+    const y=timeCanvas.height-(timeHistory[i]-20)/80*timeCanvas.height;
+    i===0?timeCtx.moveTo(x,y):timeCtx.lineTo(x,y);
+  }
+  timeCtx.stroke();
+
+  // 그리드라인
+  timeCtx.strokeStyle='#1e1e2e';
+  timeCtx.lineWidth=1;
+  [30,50,70,90].forEach(v=>{
+    const y=timeCanvas.height-(v-20)/80*timeCanvas.height;
+    timeCtx.beginPath();timeCtx.moveTo(0,y);timeCtx.lineTo(timeCanvas.width,y);timeCtx.stroke();
+    timeCtx.fillStyle='#333';timeCtx.font='20px sans-serif';
+    timeCtx.fillText(v+'dB',8,y-4);
+  });
 
   requestAnimationFrame(update);
 }
 
-function logData() {
-  const db = document.getElementById('db-val').textContent;
-  if (db === '--') return;
-  const now = new Date();
-  const time = now.getHours() + ':' + String(now.getMinutes()).padStart(2,'0') + ':' + String(now.getSeconds()).padStart(2,'0');
-  const tag = situations[Math.min(logCount, situations.length - 1)];
-  logs.unshift({ time, db, tag });
-  logCount++;
-  if (logs.length > 8) logs.pop();
-  renderLog();
+// ── 퀴즈 ──
+const quizzes = [
+  {q:'남자 어른 목소리의 진동수 범위는?',opts:['85~180Hz','300~500Hz','1000Hz 이상','20Hz 이하'],ans:0,hint:'성인 남성은 저음이라 진동수가 낮아요'},
+  {q:'소리가 클수록 파형에서 무엇이 커지나요?',opts:['진동수','파장','진폭','음색'],ans:2,hint:'진폭이 크면 소리가 커져요'},
+  {q:'같은 "도" 음이라도 피아노와 기타 소리가 다른 이유는?',opts:['진동수가 달라서','진폭이 달라서','파형 모양이 달라서','파장이 달라서'],ans:2,hint:'음색은 파형의 모양으로 결정돼요'},
+  {q:'진동수가 높을수록 소리는?',opts:['커진다','작아진다','높아진다','낮아진다'],ans:2,hint:'진동수 = 높낮이'},
+  {q:'사람이 들을 수 있는 소리의 진동수 범위는?',opts:['0~100Hz','20~20,000Hz','100~1,000Hz','1,000~100,000Hz'],ans:1,hint:'가청 주파수 범위예요'},
+];
+let qIdx=0;
+
+function renderQuiz(){
+  const q=quizzes[qIdx%quizzes.length];
+  document.getElementById('quiz-body').innerHTML=`
+    <div class="quiz-q">Q${(qIdx%quizzes.length)+1}. ${q.q}</div>
+    <div class="quiz-opts">
+      ${q.opts.map((o,i)=>`<button class="quiz-btn" onclick="checkQuiz(${i})">${o}</button>`).join('')}
+    </div>
+    <div class="quiz-result" id="quiz-result"></div>
+  `;
 }
 
-function renderLog() {
-  const el = document.getElementById('log-body');
-  if (!logs.length) {
-    el.innerHTML = '<div style="color:#555;font-size:13px;padding:4px 0;">아직 저장된 기록이 없어요</div>';
-    return;
+function checkQuiz(i){
+  const q=quizzes[qIdx%quizzes.length];
+  const btns=document.querySelectorAll('.quiz-btn');
+  btns.forEach((b,idx)=>{
+    if(idx===q.ans) b.classList.add('correct');
+    else if(idx===i&&i!==q.ans) b.classList.add('wrong');
+    b.disabled=true;
+  });
+  const res=document.getElementById('quiz-result');
+  if(i===q.ans){
+    res.innerHTML=`<span style="color:var(--green)">✅ 정답! ${q.hint}</span>`;
+  } else {
+    res.innerHTML=`<span style="color:#ff6b6b">❌ 틀렸어요! ${q.hint}</span>`;
   }
-  el.innerHTML = logs.map(l =>
-    `<div class="log-row">
-      <span class="log-tag">${l.tag}</span>
-      <span style="color:#888;font-size:12px;">${l.time}</span>
-      <span style="font-weight:500;color:#6ee7b7;">${l.db} dB</span>
-    </div>`
-  ).join('');
+  qIdx++;
+  setTimeout(renderQuiz,2500);
 }
 
-function resetAll() {
-  minDb = 999; maxDb = -999; logs = []; logCount = 0;
+// ── 기록 ──
+const situations=['조용히','속삭임','보통 목소리','큰 소리','높은 음','낮은 음','기타'];
+function saveLog(){
+  const db=parseInt(document.getElementById('m-amp').textContent)||0;
+  const freq=parseInt(document.getElementById('m-freq').textContent)||0;
+  const wave=parseInt(document.getElementById('m-wave').textContent)||0;
+  const now=new Date();
+  const time=now.getHours()+':'+String(now.getMinutes()).padStart(2,'0')+':'+String(now.getSeconds()).padStart(2,'0');
+  const tag=situations[Math.min(logCount,situations.length-1)];
+  logs.unshift({time,db,freq,wave,tag});
+  if(logs.length>8) logs.pop();
+  logCount++;
   renderLog();
-  document.getElementById('min-val').textContent = '--';
-  document.getElementById('max-val').textContent = '--';
 }
+function renderLog(){
+  const el=document.getElementById('log-wrap');
+  if(!logs.length){el.innerHTML='<p style="font-size:13px;color:var(--muted);">아직 저장된 기록이 없어요</p>';return;}
+  el.innerHTML=`<table class="log-table">
+    <tr><th>상황</th><th>세기(dB)</th><th>진동수(Hz)</th><th>파장(cm)</th><th>시각</th></tr>
+    ${logs.map(l=>`<tr>
+      <td><span class="tag">${l.tag}</span></td>
+      <td style="color:var(--green)">${l.db}</td>
+      <td style="color:var(--blue)">${l.freq||'--'}</td>
+      <td style="color:var(--purple)">${l.wave||'--'}</td>
+      <td style="color:var(--muted);font-size:11px">${l.time}</td>
+    </tr>`).join('')}
+  </table>`;
+}
+function resetLog(){logs=[];logCount=0;renderLog();}
 </script>
 </body>
 </html>
